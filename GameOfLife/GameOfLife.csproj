@@ -108,6 +108,9 @@
     <Content Include="119P4H1V0.bmp">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Cursor1.cur">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="GOL1.bmp">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

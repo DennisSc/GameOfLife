@@ -33,6 +33,12 @@ namespace GameOfLife
 
         Bitmap bmp = new Bitmap((WidthX * gridSize) + (gridSize), (WidthY * gridSize) + (gridSize), System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
 
+        static Tuple<int, int> mousePos = new Tuple<int, int>(0, 0);
+        static Tuple<int, int> oldMousePos = new Tuple<int, int>(0, 0);
+
+        static bool isMouseOverPic = false;
+
+        static bool picWasSaved = false;
 
         Stopwatch frameStopwatch = new Stopwatch();
         double frameCounter = 0;
@@ -67,6 +73,8 @@ namespace GameOfLife
         static Timer timer1 = new Timer();
 
         static Timer timer2 = new Timer();
+
+        static Timer timer3 = new Timer();
 
         Bitmap image1;
 
@@ -119,6 +127,9 @@ namespace GameOfLife
             timer2.Interval = 333;
             timer2.Tick += Timer2_Tick;
 
+            timer3.Interval = 16;
+            timer3.Tick += Timer3_Tick;
+
         }
 
         private void resizePicBox()
@@ -163,9 +174,10 @@ namespace GameOfLife
             frameStopwatch.Start();
             if (drawMode == 0)
                 drawChangedCells(oldboard, board);
+                //drawBoard();
             else if (drawMode >= 1 )
                 drawChangedCellsShadowed(oldboard, board);
-            //drawBoard();
+            
             frameStopwatch.Stop();
             drawAvg += (double)frameStopwatch.Elapsed.TotalMilliseconds;
             frameStopwatch.Reset();
@@ -190,6 +202,49 @@ namespace GameOfLife
 
             //drawBoard();
 
+        }
+
+        private void Timer3_Tick(object sender, EventArgs e)
+        {
+            drawBoard();
+            using (var g = Graphics.FromImage(bmp))
+            {
+                if (radioButton5.Checked)
+                    delPreviewImage(g, "GOL3.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                else if (radioButton6.Checked)
+                    delPreviewImage(g, "GOL2.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                else if (radioButton7.Checked)
+                    delPreviewImage(g, "GOL1.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                else if (radioButton8.Checked)
+                    delPreviewImage(g, "GOL4.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                else if (radioButton9.Checked)
+                    delPreviewImage(g, "119P4H1V0.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                else if (radioButton10.Checked)
+                    delPreviewImage(g, "GOL5.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                else if (radioButton11.Checked)
+                    delPreviewImage(g, "GOL6.BMP", oldMousePos.Item1, oldMousePos.Item2);
+
+                oldMousePos = mousePos;
+
+                if (isMouseOverPic == true)
+                {
+                    if (radioButton5.Checked)
+                        previewImage(g, "GOL3.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                    else if (radioButton6.Checked)
+                        previewImage(g, "GOL2.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                    else if (radioButton7.Checked)
+                        previewImage(g, "GOL1.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                    else if (radioButton8.Checked)
+                        previewImage(g, "GOL4.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                    else if (radioButton9.Checked)
+                        previewImage(g, "119P4H1V0.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                    else if (radioButton10.Checked)
+                        previewImage(g, "GOL5.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                    else if (radioButton11.Checked)
+                        previewImage(g, "GOL6.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                }
+            }
+            
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -262,6 +317,21 @@ namespace GameOfLife
             //var bmp = new Bitmap(this.pictureBox1.Width, this.pictureBox1.Height, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
             using (var g = Graphics.FromImage(bmp))
             {
+                if (radioButton5.Checked)
+                    delPreviewImage(g, "GOL3.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                else if (radioButton6.Checked)
+                    delPreviewImage(g, "GOL2.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                else if (radioButton7.Checked)
+                    delPreviewImage(g, "GOL1.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                else if (radioButton8.Checked)
+                    delPreviewImage(g, "GOL4.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                else if (radioButton9.Checked)
+                    delPreviewImage(g, "119P4H1V0.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                else if (radioButton10.Checked)
+                    delPreviewImage(g, "GOL5.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                else if (radioButton11.Checked)
+                    delPreviewImage(g, "GOL6.BMP", oldMousePos.Item1, oldMousePos.Item2);
+
                 for (int i = 0; i < WidthX; i++)
                 {
                     for (int j = 0; j < WidthY; j++)
@@ -275,6 +345,28 @@ namespace GameOfLife
                         //GraphicsExtensions.FillCircle(myGraphics, myBlankBrush, Xoffset + i * gridSize, Yoffset + j * gridSize, circleSize);
                     }
                 }
+
+                oldMousePos = mousePos;
+
+                if (isMouseOverPic == true)
+                {
+                    if (radioButton5.Checked)
+                        previewImage(g, "GOL3.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                    else if (radioButton6.Checked)
+                        previewImage(g, "GOL2.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                    else if (radioButton7.Checked)
+                        previewImage(g, "GOL1.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                    else if (radioButton8.Checked)
+                        previewImage(g, "GOL4.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                    else if (radioButton9.Checked)
+                        previewImage(g, "119P4H1V0.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                    else if (radioButton10.Checked)
+                        previewImage(g, "GOL5.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                    else if (radioButton11.Checked)
+                        previewImage(g, "GOL6.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                }
+
+
             }
             this.pictureBox1.Image = bmp;
             //board = Tempboard;
@@ -293,6 +385,23 @@ namespace GameOfLife
             //var bmp = new Bitmap(this.pictureBox1.Width, this.pictureBox1.Height, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
             using (var g = Graphics.FromImage(bmp))
             {
+                
+                if (radioButton5.Checked)
+                    delPreviewImage(g, "GOL3.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                else if (radioButton6.Checked)
+                    delPreviewImage(g, "GOL2.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                else if (radioButton7.Checked)
+                    delPreviewImage(g, "GOL1.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                else if (radioButton8.Checked)
+                    delPreviewImage(g, "GOL4.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                else if (radioButton9.Checked)
+                    delPreviewImage(g, "119P4H1V0.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                else if (radioButton10.Checked)
+                    delPreviewImage(g, "GOL5.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                else if (radioButton11.Checked)
+                    delPreviewImage(g, "GOL6.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                
+
                 for (int i = 0; i < WidthX; i++)
                 {
                     for (int j = 0; j < WidthY; j++)
@@ -327,6 +436,26 @@ namespace GameOfLife
                        
 
                     }
+                }
+
+                oldMousePos = mousePos;
+
+                if (isMouseOverPic == true)
+                {
+                    if (radioButton5.Checked)
+                        previewImage(g,"GOL3.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                    else if (radioButton6.Checked)
+                        previewImage(g,"GOL2.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                    else if (radioButton7.Checked)
+                        previewImage(g, "GOL1.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                    else if (radioButton8.Checked)
+                        previewImage(g, "GOL4.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                    else if (radioButton9.Checked)
+                        previewImage(g, "119P4H1V0.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                    else if (radioButton10.Checked)
+                        previewImage(g, "GOL5.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                    else if (radioButton11.Checked)
+                        previewImage(g, "GOL6.BMP", oldMousePos.Item1, oldMousePos.Item2);
                 }
             }
             this.pictureBox1.Image = bmp;
@@ -427,7 +556,7 @@ namespace GameOfLife
                 {
                     int pixelColor = image1.GetPixel(x, y).ToArgb();
                     int empty = Color.Empty.ToArgb();
-                    Debug.WriteLine("Pixel: " + x + ":" + y + " - pixelcolor: " + pixelColor + " - empty: " + empty);
+                    //Debug.WriteLine("Pixel: " + x + ":" + y + " - pixelcolor: " + pixelColor + " - empty: " + empty);
                     if (pixelColor < -65794)
                         board[x, y] = true;
                     else
@@ -439,28 +568,184 @@ namespace GameOfLife
 
         private void loadImagetoPos(string BMPname, int Xoffset, int Yoffset)
         {
+            
+            
             image1 = new Bitmap(BMPname, true);
+            
             label1.Text = "BMP format: " + Environment.NewLine + image1.PixelFormat.ToString() + Environment.NewLine;
             label1.Text += image1.Height + "x" + image1.Width;
 
-            int x, y;
+            Debug.WriteLine("(Xoffset / gridSize): {0}", (Xoffset / gridSize));
+            Debug.WriteLine("(Yoffset / gridSize): {0}", (Yoffset / gridSize));
+            Debug.WriteLine("image1 Width: {0}", image1.Width);
+            Debug.WriteLine("image1 Height: {0}", image1.Height);
+            Debug.WriteLine("WidthX: {0}", WidthX);
+            Debug.WriteLine("WidthY: {0}", WidthY);
 
-            // Loop through the images pixels to reset color.
-            for (x = 0; x < image1.Width; x++)
+            if (
+                //((Xoffset / gridSize) > (image1.Width)) && 
+                //((Yoffset / gridSize) > (image1.Height)) && 
+                (((Xoffset / gridSize) + (image1.Width)) < (WidthX)) &&
+                (((Yoffset / gridSize) + (image1.Height)) < (WidthY))
+
+                //((Xoffset / gridSize) < (WidthX - (image1.Width / 2) - 1)) && 
+                //((Yoffset / gridSize) < (WidthY - (image1.Height / 2) - 1))
+                )
             {
-                for (y = 0; y < image1.Height; y++)
-                {
-                    int pixelColor = image1.GetPixel(x, y).ToArgb();
-                    int empty = Color.Empty.ToArgb();
-                    Debug.WriteLine("Pixel: " + x + ":" + y + " - pixelcolor: " + pixelColor + " - empty: " + empty);
-                    if (pixelColor < -65794)
-                        board[((Xoffset/gridSize)-(image1.Width/2)) +x, ((Yoffset/gridSize)-(image1.Height/2))+y] = true;
-                    else
-                        board[(Xoffset / gridSize) + x, (Yoffset / gridSize) + y] = false;
+               
+                    Debug.WriteLine("BMP fits into pos");
+                    
 
-                }
+                    int x, y;
+
+                    // Loop through the images pixels
+                    for (y = 0; y < image1.Height; y++)
+                    {
+                        for (x = 0; x < image1.Width; x++)
+                        {
+                            int pixelColor = image1.GetPixel(x, y).ToArgb();
+                            //int empty = Color.Empty.ToArgb();
+                            int posX = (Xoffset / gridSize) + x;
+                            int posY = (Yoffset / gridSize) + y;
+                            //Debug.WriteLine("PosX: {0}   PosY: {1}", posX, posY);
+                            //Debug.WriteLine("Pixel: " + x + ":" + y + " - pixelcolor: " + pixelColor + " - empty: " + empty);
+                            if (pixelColor < -65794)
+                                board[posX, posY] = true;
+                            else
+                                board[posX, posY] = false;
+
+                        }
+                    }
+                
+            }
+            else
+            {
+                Debug.WriteLine("doesn't fit: ");
+               
+
             }
         }
+
+
+        private void previewImage(Graphics g, string BMPname, int Xoffset, int Yoffset)
+        {
+
+
+            image1 = new Bitmap(BMPname, true);
+
+           
+
+            if (
+                //((Xoffset / gridSize) > (image1.Width)) && 
+                //((Yoffset / gridSize) > (image1.Height)) && 
+                (((Xoffset / gridSize) + (image1.Width)) < (WidthX)) &&
+                (((Yoffset / gridSize) + (image1.Height)) < (WidthY))
+
+                //((Xoffset / gridSize) < (WidthX - (image1.Width / 2) - 1)) && 
+                //((Yoffset / gridSize) < (WidthY - (image1.Height / 2) - 1))
+                )
+            {
+
+                //Debug.WriteLine("BMP fits into pos");
+
+
+
+
+                int x, y;
+
+                // Loop through the images pixels
+                
+                    for (y = 0; y < image1.Height; y++)
+                    {
+                        for (x = 0; x < image1.Width; x++)
+                        {
+                            int pixelColor = image1.GetPixel(x, y).ToArgb();
+                            int empty = Color.Empty.ToArgb();
+                            int posX = (Xoffset / gridSize) + x;
+                            int posY = (Yoffset / gridSize) + y;
+                            //Debug.WriteLine("PosX: {0}   PosY: {1}", posX, posY);
+                            //Debug.WriteLine("Pixel: " + x + ":" + y + " - pixelcolor: " + pixelColor + " - empty: " + empty);
+                            if (pixelColor < -65794)
+
+                                GraphicsExtensions.FillRectangle(g, new SolidBrush(Color.DarkGray), Xoffset + x * gridSize + cellSize, Yoffset + y * gridSize + cellSize, cellSize);
+
+                            //else
+                                //GraphicsExtensions.FillRectangle(g, backcolor, Xoffset + x * gridSize + cellSize, Yoffset + y * gridSize + cellSize, cellSize);
+
+                        }
+                    }
+                    
+                
+                this.pictureBox1.Image = bmp;
+
+            }
+            else
+            {
+                //Debug.WriteLine("doesn't fit: ");
+
+
+            }
+        }
+
+
+
+        private void delPreviewImage(Graphics g, string BMPname, int Xoffset, int Yoffset)
+        {
+
+
+            image1 = new Bitmap(BMPname, true);
+
+
+
+            if (
+                //((Xoffset / gridSize) > (image1.Width)) && 
+                //((Yoffset / gridSize) > (image1.Height)) && 
+                (((Xoffset / gridSize) + (image1.Width)) < (WidthX)) &&
+                (((Yoffset / gridSize) + (image1.Height)) < (WidthY))
+
+                //((Xoffset / gridSize) < (WidthX - (image1.Width / 2) - 1)) && 
+                //((Yoffset / gridSize) < (WidthY - (image1.Height / 2) - 1))
+                )
+            {
+
+                //Debug.WriteLine("BMP fits into pos");
+
+
+
+
+                int x, y;
+
+                // Loop through the images pixels
+
+                for (y = 0; y < image1.Height; y++)
+                {
+                    for (x = 0; x < image1.Width; x++)
+                    {
+                        int pixelColor = image1.GetPixel(x, y).ToArgb();
+                        int empty = Color.Empty.ToArgb();
+                        int posX = (Xoffset / gridSize) + x;
+                        int posY = (Yoffset / gridSize) + y;
+                        //Debug.WriteLine("PosX: {0}   PosY: {1}", posX, posY);
+                        //Debug.WriteLine("Pixel: " + x + ":" + y + " - pixelcolor: " + pixelColor + " - empty: " + empty);
+                        if (pixelColor < -65794)
+                            GraphicsExtensions.FillRectangle(g, backcolor, Xoffset + x * gridSize + cellSize, Yoffset + y * gridSize + cellSize, cellSize);
+
+                    }
+                }
+
+
+                this.pictureBox1.Image = bmp;
+
+            }
+            else
+            {
+                //Debug.WriteLine("doesn't fit: ");
+
+
+            }
+        }
+
+
 
         private void button3_Click(object sender, EventArgs e)
         {
@@ -549,28 +834,81 @@ namespace GameOfLife
             MouseEventArgs me = (MouseEventArgs)e;
             Point coordinates = me.Location;
             Debug.WriteLine(coordinates.ToString());
+            if (me.Button == MouseButtons.Left)
+                if (radioButton5.Checked)
+                    loadImagetoPos("GOL3.BMP", coordinates.X, coordinates.Y);
+                else if (radioButton6.Checked)
+                    loadImagetoPos("GOL2.BMP", coordinates.X, coordinates.Y);
+                else if (radioButton7.Checked)
+                    loadImagetoPos("GOL1.BMP", coordinates.X, coordinates.Y);
+                else if (radioButton8.Checked)
+                    loadImagetoPos("GOL4.BMP", coordinates.X, coordinates.Y);
+                else if (radioButton9.Checked)
+                    loadImagetoPos("119P4H1V0.BMP", coordinates.X, coordinates.Y);
+                else if (radioButton10.Checked)
+                    loadImagetoPos("GOL5.BMP", coordinates.X, coordinates.Y);
+                else if (radioButton11.Checked)
+                    loadImagetoPos("GOL6.BMP", coordinates.X, coordinates.Y);
 
-            if (radioButton5.Checked)
-                loadImagetoPos("GOL3.BMP", coordinates.X, coordinates.Y);
-            else if (radioButton6.Checked)
-                loadImagetoPos("GOL2.BMP", coordinates.X, coordinates.Y);
-            else if (radioButton7.Checked)
-                loadImagetoPos("GOL1.BMP", coordinates.X, coordinates.Y);
-            else if (radioButton8.Checked)
-                loadImagetoPos("GOL4.BMP", coordinates.X, coordinates.Y);
-            else if (radioButton9.Checked)
-                loadImagetoPos("119P4H1V0.BMP", coordinates.X, coordinates.Y);
-            else if (radioButton10.Checked)
-                loadImagetoPos("GOL5.BMP", coordinates.X, coordinates.Y);
-            else if (radioButton11.Checked)
-                loadImagetoPos("GOL6.BMP", coordinates.X, coordinates.Y);
 
-            if (!(timer1.Enabled))
+            if (timer1.Enabled == false)
                 drawBoard();
             
-           
+
+
         }
-    }
+
+        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        {
+            //MouseEventArgs me = (MouseEventArgs)e;
+            Point coordinates = e.Location;
+            //Debug.WriteLine(coordinates.ToString());
+            mousePos = new Tuple<int, int>(coordinates.X, coordinates.Y);
+            if (picWasSaved)
+            {
+                picWasSaved = false;
+                
+            }
+            
+        }
+
+        private void pictureBox1_MouseEnter(object sender, EventArgs e)
+        {
+            isMouseOverPic = true;
+            Cursor myCursor = new Cursor(Application.StartupPath + "\\Cursor1.cur");
+            pictureBox1.Cursor = myCursor;
+            if (timer1.Enabled == false)
+                timer3.Start();
+        }
+
+        private void pictureBox1_MouseLeave(object sender, EventArgs e)
+        {
+            isMouseOverPic = false;
+            pictureBox1.Cursor = Cursors.Default;
+            if (timer1.Enabled == false)
+                timer3.Stop();
+            using (var g = Graphics.FromImage(bmp))
+            {
+                if (radioButton5.Checked)
+                    delPreviewImage(g, "GOL3.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                else if (radioButton6.Checked)
+                    delPreviewImage(g, "GOL2.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                else if (radioButton7.Checked)
+                    delPreviewImage(g, "GOL1.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                else if (radioButton8.Checked)
+                    delPreviewImage(g, "GOL4.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                else if (radioButton9.Checked)
+                    delPreviewImage(g, "119P4H1V0.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                else if (radioButton10.Checked)
+                    delPreviewImage(g, "GOL5.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                else if (radioButton11.Checked)
+                    delPreviewImage(g, "GOL6.BMP", oldMousePos.Item1, oldMousePos.Item2);
+
+                oldMousePos = mousePos;
+
+            }
+            }
+        }
 
     public static class GraphicsExtensions
     {
