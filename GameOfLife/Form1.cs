@@ -17,7 +17,7 @@ namespace GameOfLife
         const int healthCondition1 = 2; // two adjacent dots required to survive
         const int healthCondition2 = 3; // three adjacent dots required to grow
 
-        static int speed = 20; // time in ms between cycles
+        static int speed = 50; // time in ms between cycles
 
         const int WidthX = 345; // X dimension of cell grid
         const int WidthY = 185; // Y dimension of cell grid
@@ -34,7 +34,7 @@ namespace GameOfLife
 
         Bitmap bmp = new Bitmap((WidthX * gridSize) + (gridSize), (WidthY * gridSize) + (gridSize), System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
 
-        static string patternCustomFileName = "";
+        static string patternCustomFileName = "pictures\\GOL1.bmp";
 
         static Tuple<int, int> mousePos = new Tuple<int, int>(0, 0);
         static Tuple<int, int> oldMousePos = new Tuple<int, int>(0, 0);
@@ -130,7 +130,7 @@ namespace GameOfLife
             timer2.Interval = 333;
             timer2.Tick += Timer2_Tick;
 
-            timer3.Interval = 16;
+            timer3.Interval = 5;
             timer3.Tick += Timer3_Tick;
 
         }
@@ -196,9 +196,9 @@ namespace GameOfLife
 
             double drawavg = drawAvg / frameCounter;
             double calcavg = calcAvg / frameCounter;
-            label5.Text = calcavg.ToString();
-            label6.Text = drawavg.ToString();
-            label4.Text = ((drawAvg + calcAvg) / frameCounter).ToString();
+            label5.Text = calcavg.ToString("0.000");
+            label6.Text = drawavg.ToString("0.000");
+            label4.Text = ((drawAvg + calcAvg) / frameCounter).ToString("0.000");
             frameCounter = 0;
             drawAvg = 0;
             calcAvg = 0;
@@ -212,43 +212,15 @@ namespace GameOfLife
             drawBoard();
             using (var g = Graphics.FromImage(bmp))
             {
-                if (radioButton5.Checked)
-                    delPreviewImage(g, "GOL3.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                else if (radioButton6.Checked)
-                    delPreviewImage(g, "GOL2.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                else if (radioButton7.Checked)
-                    delPreviewImage(g, "GOL1.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                else if (radioButton8.Checked)
-                    delPreviewImage(g, "GOL4.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                else if (radioButton9.Checked)
-                    delPreviewImage(g, "119P4H1V0.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                else if (radioButton10.Checked)
-                    delPreviewImage(g, "GOL5.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                else if (radioButton11.Checked)
-                    delPreviewImage(g, "GOL6.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                else if (radioButton12.Checked)
-                    delPreviewImage(g, @patternCustomFileName, oldMousePos.Item1, oldMousePos.Item2);
+                delPreviewImage(g, oldMousePos.Item1, oldMousePos.Item2);
+                
 
                 oldMousePos = mousePos;
 
                 if (isMouseOverPic == true)
                 {
-                    if (radioButton5.Checked)
-                        previewImage(g, "GOL3.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                    else if (radioButton6.Checked)
-                        previewImage(g, "GOL2.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                    else if (radioButton7.Checked)
-                        previewImage(g, "GOL1.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                    else if (radioButton8.Checked)
-                        previewImage(g, "GOL4.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                    else if (radioButton9.Checked)
-                        previewImage(g, "119P4H1V0.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                    else if (radioButton10.Checked)
-                        previewImage(g, "GOL5.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                    else if (radioButton11.Checked)
-                        previewImage(g, "GOL6.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                    else if (radioButton12.Checked)
-                        previewImage(g, @patternCustomFileName, oldMousePos.Item1, oldMousePos.Item2);
+                    previewImage(g, oldMousePos.Item1, oldMousePos.Item2);
+                    
                 }
             }
             
@@ -324,22 +296,8 @@ namespace GameOfLife
             //var bmp = new Bitmap(this.pictureBox1.Width, this.pictureBox1.Height, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
             using (var g = Graphics.FromImage(bmp))
             {
-                if (radioButton5.Checked)
-                    delPreviewImage(g, "GOL3.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                else if (radioButton6.Checked)
-                    delPreviewImage(g, "GOL2.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                else if (radioButton7.Checked)
-                    delPreviewImage(g, "GOL1.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                else if (radioButton8.Checked)
-                    delPreviewImage(g, "GOL4.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                else if (radioButton9.Checked)
-                    delPreviewImage(g, "119P4H1V0.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                else if (radioButton10.Checked)
-                    delPreviewImage(g, "GOL5.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                else if (radioButton11.Checked)
-                    delPreviewImage(g, "GOL6.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                else if (radioButton12.Checked)
-                    delPreviewImage(g, @patternCustomFileName, oldMousePos.Item1, oldMousePos.Item2);
+                delPreviewImage(g, oldMousePos.Item1, oldMousePos.Item2);
+                
 
                 for (int i = 0; i < WidthX; i++)
                 {
@@ -359,22 +317,8 @@ namespace GameOfLife
 
                 if (isMouseOverPic == true)
                 {
-                    if (radioButton5.Checked)
-                        previewImage(g, "GOL3.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                    else if (radioButton6.Checked)
-                        previewImage(g, "GOL2.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                    else if (radioButton7.Checked)
-                        previewImage(g, "GOL1.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                    else if (radioButton8.Checked)
-                        previewImage(g, "GOL4.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                    else if (radioButton9.Checked)
-                        previewImage(g, "119P4H1V0.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                    else if (radioButton10.Checked)
-                        previewImage(g, "GOL5.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                    else if (radioButton11.Checked)
-                        previewImage(g, "GOL6.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                    else if (radioButton12.Checked)
-                        previewImage(g, @patternCustomFileName, oldMousePos.Item1, oldMousePos.Item2);
+                    previewImage(g, oldMousePos.Item1, oldMousePos.Item2);
+                    
                 }
 
 
@@ -397,22 +341,7 @@ namespace GameOfLife
             using (var g = Graphics.FromImage(bmp))
             {
                 
-                if (radioButton5.Checked)
-                    delPreviewImage(g, "GOL3.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                else if (radioButton6.Checked)
-                    delPreviewImage(g, "GOL2.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                else if (radioButton7.Checked)
-                    delPreviewImage(g, "GOL1.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                else if (radioButton8.Checked)
-                    delPreviewImage(g, "GOL4.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                else if (radioButton9.Checked)
-                    delPreviewImage(g, "119P4H1V0.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                else if (radioButton10.Checked)
-                    delPreviewImage(g, "GOL5.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                else if (radioButton11.Checked)
-                    delPreviewImage(g, "GOL6.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                else if (radioButton12.Checked)
-                    delPreviewImage(g, @patternCustomFileName, oldMousePos.Item1, oldMousePos.Item2);
+                delPreviewImage(g, oldMousePos.Item1, oldMousePos.Item2);
 
                 for (int i = 0; i < WidthX; i++)
                 {
@@ -454,22 +383,8 @@ namespace GameOfLife
 
                 if (isMouseOverPic == true)
                 {
-                    if (radioButton5.Checked)
-                        previewImage(g,"GOL3.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                    else if (radioButton6.Checked)
-                        previewImage(g,"GOL2.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                    else if (radioButton7.Checked)
-                        previewImage(g, "GOL1.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                    else if (radioButton8.Checked)
-                        previewImage(g, "GOL4.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                    else if (radioButton9.Checked)
-                        previewImage(g, "119P4H1V0.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                    else if (radioButton10.Checked)
-                        previewImage(g, "GOL5.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                    else if (radioButton11.Checked)
-                        previewImage(g, "GOL6.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                    else if (radioButton12.Checked)
-                        previewImage(g, @patternCustomFileName, oldMousePos.Item1, oldMousePos.Item2);
+                    previewImage(g, oldMousePos.Item1, oldMousePos.Item2);
+                    
                 }
             }
             this.pictureBox1.Image = bmp;
@@ -540,20 +455,6 @@ namespace GameOfLife
 
 
       
-            public static int ToInt(bool value)
-            {
-                return value ? 1 : 0;
-            }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            //timer1.Stop();
-            //createBoard();
-            loadImagefromBMP("GOL1.bmp");
-            if (!(timer1.Enabled))
-                drawBoard();
-        }
-
 
         private void loadImagefromBMP(string BMPname)
         {
@@ -585,8 +486,8 @@ namespace GameOfLife
             
             
             image1 = new Bitmap(BMPname, true);
-            
-            label1.Text = "BMP format: " + Environment.NewLine + image1.PixelFormat.ToString() + Environment.NewLine;
+
+            label1.Text = Path.GetFileName(BMPname) + Environment.NewLine + image1.PixelFormat.ToString().Substring(6) + Environment.NewLine;
             label1.Text += image1.Height + "x" + image1.Width;
 
             Debug.WriteLine("(Xoffset / gridSize): {0}", (Xoffset / gridSize));
@@ -641,10 +542,18 @@ namespace GameOfLife
         }
 
 
-        private void previewImage(Graphics g, string BMPname, int Xoffset, int Yoffset)
+        private void previewImage(Graphics g, int Xoffset, int Yoffset)
         {
 
+            string BMPname = "";
 
+            if (radioButton12.Checked)
+                BMPname = @patternCustomFileName;
+            else if (radioButton5.Checked)
+                BMPname = "1pxblack.bmp";
+
+            if (BMPname == "")
+                return;
 
             image1 = new Bitmap(BMPname, true);
 
@@ -704,9 +613,17 @@ namespace GameOfLife
 
 
 
-        private void delPreviewImage(Graphics g, string BMPname, int Xoffset, int Yoffset)
+        private void delPreviewImage(Graphics g, int Xoffset, int Yoffset)
         {
+            string BMPname = "";
 
+            if (radioButton12.Checked)
+                BMPname = @patternCustomFileName;
+            else if (radioButton5.Checked)
+                BMPname = "1pxblack.bmp";
+
+            if (BMPname == "")
+                return;
 
             image1 = new Bitmap(BMPname, true);
 
@@ -758,6 +675,23 @@ namespace GameOfLife
 
 
             }
+        }
+
+
+
+
+        public static int ToInt(bool value)
+        {
+            return value ? 1 : 0;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            //timer1.Stop();
+            //createBoard();
+            loadImagefromBMP("pictures\\GOL1.bmp");
+            if (!(timer1.Enabled))
+                drawBoard();
         }
 
 
@@ -840,24 +774,12 @@ namespace GameOfLife
             Point coordinates = me.Location;
             Debug.WriteLine(coordinates.ToString());
             if (me.Button == MouseButtons.Left)
-                if (radioButton5.Checked)
-                    loadImagetoPos("GOL3.BMP", coordinates.X, coordinates.Y);
-                else if (radioButton6.Checked)
-                    loadImagetoPos("GOL2.BMP", coordinates.X, coordinates.Y);
-                else if (radioButton7.Checked)
-                    loadImagetoPos("GOL1.BMP", coordinates.X, coordinates.Y);
-                else if (radioButton8.Checked)
-                    loadImagetoPos("GOL4.BMP", coordinates.X, coordinates.Y);
-                else if (radioButton9.Checked)
-                    loadImagetoPos("119P4H1V0.BMP", coordinates.X, coordinates.Y);
-                else if (radioButton10.Checked)
-                    loadImagetoPos("GOL5.BMP", coordinates.X, coordinates.Y);
-                else if (radioButton11.Checked)
-                    loadImagetoPos("GOL6.BMP", coordinates.X, coordinates.Y);
-                else if (radioButton12.Checked)
+                //if (radioButton5.Checked)
+                  //  loadImagetoPos("1pxblack.BMP", coordinates.X, coordinates.Y);
+                /*else*/ if (radioButton12.Checked)
                     loadImagetoPos(@patternCustomFileName, coordinates.X, coordinates.Y);
 
-            if (timer1.Enabled == false)
+            //if (timer1.Enabled == false)
                 drawBoard();
             
 
@@ -869,6 +791,9 @@ namespace GameOfLife
             //MouseEventArgs me = (MouseEventArgs)e;
             Point coordinates = e.Location;
             //Debug.WriteLine(coordinates.ToString());
+            if (e.Button == MouseButtons.Left)
+                if (radioButton5.Checked)
+                    loadImagetoPos("1pxblack.BMP", coordinates.X, coordinates.Y);
             mousePos = new Tuple<int, int>(coordinates.X, coordinates.Y);
             if (picWasSaved)
             {
@@ -895,22 +820,7 @@ namespace GameOfLife
                 timer3.Stop();
             using (var g = Graphics.FromImage(bmp))
             {
-                if (radioButton5.Checked)
-                    delPreviewImage(g, "GOL3.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                else if (radioButton6.Checked)
-                    delPreviewImage(g, "GOL2.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                else if (radioButton7.Checked)
-                    delPreviewImage(g, "GOL1.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                else if (radioButton8.Checked)
-                    delPreviewImage(g, "GOL4.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                else if (radioButton9.Checked)
-                    delPreviewImage(g, "119P4H1V0.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                else if (radioButton10.Checked)
-                    delPreviewImage(g, "GOL5.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                else if (radioButton11.Checked)
-                    delPreviewImage(g, "GOL6.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                else if (radioButton12.Checked)
-                    delPreviewImage(g, @patternCustomFileName, oldMousePos.Item1, oldMousePos.Item2);
+                delPreviewImage(g, oldMousePos.Item1, oldMousePos.Item2);
                 oldMousePos = mousePos;
 
             }
@@ -933,6 +843,12 @@ namespace GameOfLife
                     radioButton12.Enabled = true;
                     radioButton12.Checked = true;
                     patternCustomFileName = filePath;
+
+                    using (image1 = new Bitmap(filePath, true))
+                    {
+                        label1.Text = Path.GetFileName(patternCustomFileName) + Environment.NewLine + image1.PixelFormat.ToString() + Environment.NewLine;
+                        label1.Text += image1.Height + " x " + image1.Width;
+                    }
                     Debug.WriteLine(patternCustomFileName);
                     //Read the contents of the file into a stream
                     //var fileStream = openFileDialog.OpenFile();
@@ -943,6 +859,19 @@ namespace GameOfLife
                     }*/
                 }
             }
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            bool isTimer1Enabled = false;
+            if (timer1.Enabled)
+                isTimer1Enabled = true;
+
+            if (isTimer1Enabled)
+                timer1.Stop();
+            drawBoard();
+            if (isTimer1Enabled)
+                timer1.Start();
         }
     }
 

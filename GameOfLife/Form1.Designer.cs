@@ -48,25 +48,27 @@ namespace GameOfLife
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.button6 = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.radioButton11 = new System.Windows.Forms.RadioButton();
-            this.radioButton10 = new System.Windows.Forms.RadioButton();
-            this.radioButton9 = new System.Windows.Forms.RadioButton();
-            this.radioButton8 = new System.Windows.Forms.RadioButton();
-            this.radioButton7 = new System.Windows.Forms.RadioButton();
-            this.radioButton6 = new System.Windows.Forms.RadioButton();
             this.radioButton5 = new System.Windows.Forms.RadioButton();
             this.button4 = new System.Windows.Forms.Button();
             this.radioButton12 = new System.Windows.Forms.RadioButton();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.button5 = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.groupBox4.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(37, 34);
+            this.button1.Location = new System.Drawing.Point(8, 18);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 0;
@@ -86,60 +88,61 @@ namespace GameOfLife
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 809);
+            this.label1.AutoEllipsis = true;
+            this.label1.Location = new System.Drawing.Point(16, 257);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(59, 13);
+            this.label1.Size = new System.Drawing.Size(133, 56);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Statuslabel";
+            this.label1.Text = "no file selected";
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(37, 63);
+            this.button3.Location = new System.Drawing.Point(8, 47);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 3;
-            this.button3.Text = "random";
+            this.button3.Text = "Random";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // trackBar1
             // 
             this.trackBar1.LargeChange = 50;
-            this.trackBar1.Location = new System.Drawing.Point(12, 944);
-            this.trackBar1.Maximum = 500;
+            this.trackBar1.Location = new System.Drawing.Point(2, 56);
+            this.trackBar1.Maximum = 1000;
+            this.trackBar1.Minimum = 1;
             this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(104, 45);
+            this.trackBar1.Size = new System.Drawing.Size(117, 45);
             this.trackBar1.TabIndex = 4;
             this.trackBar1.TickFrequency = 50;
-            this.trackBar1.Value = 20;
+            this.trackBar1.Value = 50;
             this.trackBar1.ValueChanged += new System.EventHandler(this.trackBar1_ValueChanged);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(74, 910);
+            this.label2.Location = new System.Drawing.Point(10, 22);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(38, 13);
+            this.label2.Size = new System.Drawing.Size(79, 13);
             this.label2.TabIndex = 5;
-            this.label2.Text = "Speed";
+            this.label2.Text = "Iterating Speed";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(77, 926);
+            this.label3.Location = new System.Drawing.Point(13, 38);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(35, 13);
             this.label3.TabIndex = 6;
-            this.label3.Text = "20 ms";
+            this.label3.Text = "50 ms";
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.button4);
             this.groupBox1.Controls.Add(this.button2);
-            this.groupBox1.Location = new System.Drawing.Point(28, 130);
+            this.groupBox1.Location = new System.Drawing.Point(12, 166);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(94, 87);
+            this.groupBox1.Size = new System.Drawing.Size(125, 83);
             this.groupBox1.TabIndex = 7;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Load Bitmap";
@@ -147,34 +150,34 @@ namespace GameOfLife
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(9, 784);
+            this.label4.Location = new System.Drawing.Point(71, 585);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(59, 13);
+            this.label4.Size = new System.Drawing.Size(24, 13);
             this.label4.TabIndex = 8;
-            this.label4.Text = "FrameTime";
+            this.label4.Text = "n/a";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(9, 740);
+            this.label5.Location = new System.Drawing.Point(71, 541);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(51, 13);
+            this.label5.Size = new System.Drawing.Size(24, 13);
             this.label5.TabIndex = 9;
-            this.label5.Text = "CalcTime";
+            this.label5.Text = "n/a";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(9, 762);
+            this.label6.Location = new System.Drawing.Point(71, 563);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(55, 13);
+            this.label6.Size = new System.Drawing.Size(24, 13);
             this.label6.TabIndex = 10;
-            this.label6.Text = "DrawTime";
+            this.label6.Text = "n/a";
             // 
             // pictureBox1
             // 
             this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox1.Location = new System.Drawing.Point(155, 34);
+            this.pictureBox1.Location = new System.Drawing.Point(155, 28);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(753, 553);
             this.pictureBox1.TabIndex = 11;
@@ -190,12 +193,12 @@ namespace GameOfLife
             this.groupBox2.Controls.Add(this.radioButton3);
             this.groupBox2.Controls.Add(this.radioButton2);
             this.groupBox2.Controls.Add(this.radioButton1);
-            this.groupBox2.Location = new System.Drawing.Point(28, 494);
+            this.groupBox2.Location = new System.Drawing.Point(12, 403);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(94, 125);
+            this.groupBox2.Size = new System.Drawing.Size(125, 125);
             this.groupBox2.TabIndex = 12;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "DrawMode";
+            this.groupBox2.Text = "RenderMode";
             // 
             // radioButton4
             // 
@@ -248,96 +251,24 @@ namespace GameOfLife
             // button6
             // 
             this.button6.Cursor = System.Windows.Forms.Cursors.Default;
-            this.button6.Location = new System.Drawing.Point(37, 92);
+            this.button6.Location = new System.Drawing.Point(8, 76);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(75, 23);
             this.button6.TabIndex = 13;
-            this.button6.Text = "clear";
+            this.button6.Text = "Clear grid";
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.radioButton12);
-            this.groupBox3.Controls.Add(this.radioButton11);
-            this.groupBox3.Controls.Add(this.radioButton10);
-            this.groupBox3.Controls.Add(this.radioButton9);
-            this.groupBox3.Controls.Add(this.radioButton8);
-            this.groupBox3.Controls.Add(this.radioButton7);
-            this.groupBox3.Controls.Add(this.radioButton6);
             this.groupBox3.Controls.Add(this.radioButton5);
-            this.groupBox3.Location = new System.Drawing.Point(28, 223);
+            this.groupBox3.Location = new System.Drawing.Point(12, 316);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(121, 265);
+            this.groupBox3.Size = new System.Drawing.Size(125, 81);
             this.groupBox3.TabIndex = 14;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Klick Pattern";
-            // 
-            // radioButton11
-            // 
-            this.radioButton11.AutoSize = true;
-            this.radioButton11.Location = new System.Drawing.Point(7, 191);
-            this.radioButton11.Name = "radioButton11";
-            this.radioButton11.Size = new System.Drawing.Size(107, 17);
-            this.radioButton11.TabIndex = 6;
-            this.radioButton11.TabStop = true;
-            this.radioButton11.Text = "DeleteEightPixels";
-            this.radioButton11.UseVisualStyleBackColor = true;
-            // 
-            // radioButton10
-            // 
-            this.radioButton10.AutoSize = true;
-            this.radioButton10.Location = new System.Drawing.Point(7, 168);
-            this.radioButton10.Name = "radioButton10";
-            this.radioButton10.Size = new System.Drawing.Size(98, 17);
-            this.radioButton10.TabIndex = 5;
-            this.radioButton10.TabStop = true;
-            this.radioButton10.Text = "DeleteOnePixel";
-            this.radioButton10.UseVisualStyleBackColor = true;
-            // 
-            // radioButton9
-            // 
-            this.radioButton9.AutoSize = true;
-            this.radioButton9.Location = new System.Drawing.Point(7, 144);
-            this.radioButton9.Name = "radioButton9";
-            this.radioButton9.Size = new System.Drawing.Size(83, 17);
-            this.radioButton9.TabIndex = 4;
-            this.radioButton9.TabStop = true;
-            this.radioButton9.Text = "119P4H1V0";
-            this.radioButton9.UseVisualStyleBackColor = true;
-            // 
-            // radioButton8
-            // 
-            this.radioButton8.AutoSize = true;
-            this.radioButton8.Location = new System.Drawing.Point(7, 120);
-            this.radioButton8.Name = "radioButton8";
-            this.radioButton8.Size = new System.Drawing.Size(62, 17);
-            this.radioButton8.TabIndex = 3;
-            this.radioButton8.TabStop = true;
-            this.radioButton8.Text = "Stopper";
-            this.radioButton8.UseVisualStyleBackColor = true;
-            // 
-            // radioButton7
-            // 
-            this.radioButton7.AutoSize = true;
-            this.radioButton7.Location = new System.Drawing.Point(7, 96);
-            this.radioButton7.Name = "radioButton7";
-            this.radioButton7.Size = new System.Drawing.Size(52, 17);
-            this.radioButton7.TabIndex = 2;
-            this.radioButton7.TabStop = true;
-            this.radioButton7.Text = "Thing";
-            this.radioButton7.UseVisualStyleBackColor = true;
-            // 
-            // radioButton6
-            // 
-            this.radioButton6.AutoSize = true;
-            this.radioButton6.Location = new System.Drawing.Point(7, 72);
-            this.radioButton6.Name = "radioButton6";
-            this.radioButton6.Size = new System.Drawing.Size(56, 17);
-            this.radioButton6.TabIndex = 1;
-            this.radioButton6.TabStop = true;
-            this.radioButton6.Text = "Flower";
-            this.radioButton6.UseVisualStyleBackColor = true;
+            this.groupBox3.Text = "DrawMode";
             // 
             // radioButton5
             // 
@@ -345,10 +276,10 @@ namespace GameOfLife
             this.radioButton5.Checked = true;
             this.radioButton5.Location = new System.Drawing.Point(7, 48);
             this.radioButton5.Name = "radioButton5";
-            this.radioButton5.Size = new System.Drawing.Size(106, 17);
+            this.radioButton5.Size = new System.Drawing.Size(74, 17);
             this.radioButton5.TabIndex = 0;
             this.radioButton5.TabStop = true;
-            this.radioButton5.Text = "GosperGliderGun";
+            this.radioButton5.Text = "Draw pixel";
             this.radioButton5.UseVisualStyleBackColor = true;
             // 
             // button4
@@ -367,31 +298,93 @@ namespace GameOfLife
             this.radioButton12.Enabled = false;
             this.radioButton12.Location = new System.Drawing.Point(7, 25);
             this.radioButton12.Name = "radioButton12";
-            this.radioButton12.Size = new System.Drawing.Size(86, 17);
+            this.radioButton12.Size = new System.Drawing.Size(79, 17);
             this.radioButton12.TabIndex = 7;
             this.radioButton12.TabStop = true;
-            this.radioButton12.Text = "Custom BMP";
+            this.radioButton12.Text = "BMP stamp";
             this.radioButton12.UseVisualStyleBackColor = true;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.button5);
+            this.groupBox4.Controls.Add(this.button6);
+            this.groupBox4.Controls.Add(this.button3);
+            this.groupBox4.Controls.Add(this.button1);
+            this.groupBox4.Location = new System.Drawing.Point(12, 22);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(125, 138);
+            this.groupBox4.TabIndex = 15;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Controls";
+            // 
+            // button5
+            // 
+            this.button5.Cursor = System.Windows.Forms.Cursors.Default;
+            this.button5.Location = new System.Drawing.Point(9, 105);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(75, 23);
+            this.button5.TabIndex = 14;
+            this.button5.Text = "Redraw";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(12, 563);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(55, 13);
+            this.label7.TabIndex = 18;
+            this.label7.Text = "DrawTime";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(12, 541);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(51, 13);
+            this.label8.TabIndex = 17;
+            this.label8.Text = "CalcTime";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(12, 585);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(59, 13);
+            this.label9.TabIndex = 16;
+            this.label9.Text = "FrameTime";
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.label2);
+            this.groupBox5.Controls.Add(this.trackBar1);
+            this.groupBox5.Controls.Add(this.label3);
+            this.groupBox5.Location = new System.Drawing.Point(12, 627);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(125, 104);
+            this.groupBox5.TabIndex = 19;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "RenderSpeed";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1095, 992);
+            this.Controls.Add(this.groupBox5);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.button6);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.trackBar1);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.button1);
             this.Cursor = System.Windows.Forms.Cursors.Default;
             this.DoubleBuffered = true;
             this.Name = "Form1";
@@ -405,6 +398,9 @@ namespace GameOfLife
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -432,14 +428,14 @@ namespace GameOfLife
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.RadioButton radioButton5;
-        private System.Windows.Forms.RadioButton radioButton6;
-        private System.Windows.Forms.RadioButton radioButton7;
-        private System.Windows.Forms.RadioButton radioButton9;
-        private System.Windows.Forms.RadioButton radioButton8;
-        private System.Windows.Forms.RadioButton radioButton10;
-        private System.Windows.Forms.RadioButton radioButton11;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.RadioButton radioButton12;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.GroupBox groupBox5;
     }
 }
 
