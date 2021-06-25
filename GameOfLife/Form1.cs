@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,6 +33,8 @@ namespace GameOfLife
         uint drawMode = 0;
 
         Bitmap bmp = new Bitmap((WidthX * gridSize) + (gridSize), (WidthY * gridSize) + (gridSize), System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
+
+        static string patternCustomFileName = "";
 
         static Tuple<int, int> mousePos = new Tuple<int, int>(0, 0);
         static Tuple<int, int> oldMousePos = new Tuple<int, int>(0, 0);
@@ -223,6 +226,8 @@ namespace GameOfLife
                     delPreviewImage(g, "GOL5.BMP", oldMousePos.Item1, oldMousePos.Item2);
                 else if (radioButton11.Checked)
                     delPreviewImage(g, "GOL6.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                else if (radioButton12.Checked)
+                    delPreviewImage(g, @patternCustomFileName, oldMousePos.Item1, oldMousePos.Item2);
 
                 oldMousePos = mousePos;
 
@@ -242,6 +247,8 @@ namespace GameOfLife
                         previewImage(g, "GOL5.BMP", oldMousePos.Item1, oldMousePos.Item2);
                     else if (radioButton11.Checked)
                         previewImage(g, "GOL6.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                    else if (radioButton12.Checked)
+                        previewImage(g, @patternCustomFileName, oldMousePos.Item1, oldMousePos.Item2);
                 }
             }
             
@@ -331,6 +338,8 @@ namespace GameOfLife
                     delPreviewImage(g, "GOL5.BMP", oldMousePos.Item1, oldMousePos.Item2);
                 else if (radioButton11.Checked)
                     delPreviewImage(g, "GOL6.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                else if (radioButton12.Checked)
+                    delPreviewImage(g, @patternCustomFileName, oldMousePos.Item1, oldMousePos.Item2);
 
                 for (int i = 0; i < WidthX; i++)
                 {
@@ -364,6 +373,8 @@ namespace GameOfLife
                         previewImage(g, "GOL5.BMP", oldMousePos.Item1, oldMousePos.Item2);
                     else if (radioButton11.Checked)
                         previewImage(g, "GOL6.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                    else if (radioButton12.Checked)
+                        previewImage(g, @patternCustomFileName, oldMousePos.Item1, oldMousePos.Item2);
                 }
 
 
@@ -400,7 +411,8 @@ namespace GameOfLife
                     delPreviewImage(g, "GOL5.BMP", oldMousePos.Item1, oldMousePos.Item2);
                 else if (radioButton11.Checked)
                     delPreviewImage(g, "GOL6.BMP", oldMousePos.Item1, oldMousePos.Item2);
-                
+                else if (radioButton12.Checked)
+                    delPreviewImage(g, @patternCustomFileName, oldMousePos.Item1, oldMousePos.Item2);
 
                 for (int i = 0; i < WidthX; i++)
                 {
@@ -456,6 +468,8 @@ namespace GameOfLife
                         previewImage(g, "GOL5.BMP", oldMousePos.Item1, oldMousePos.Item2);
                     else if (radioButton11.Checked)
                         previewImage(g, "GOL6.BMP", oldMousePos.Item1, oldMousePos.Item2);
+                    else if (radioButton12.Checked)
+                        previewImage(g, @patternCustomFileName, oldMousePos.Item1, oldMousePos.Item2);
                 }
             }
             this.pictureBox1.Image = bmp;
@@ -631,6 +645,7 @@ namespace GameOfLife
         {
 
 
+
             image1 = new Bitmap(BMPname, true);
 
            
@@ -770,12 +785,7 @@ namespace GameOfLife
             label3.Text = trackBar1.Value + " ms";
         }
 
-        private void button4_Click(object sender, EventArgs e)
-        {
-            loadImagefromBMP("GOL2.bmp");
-            if (!(timer1.Enabled))
-                drawBoard();
-        }
+        
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
@@ -802,12 +812,7 @@ namespace GameOfLife
                 drawMode = 3;
         }
 
-        private void button5_Click(object sender, EventArgs e)
-        {
-            loadImagefromBMP("GOL3.bmp");
-            if (!(timer1.Enabled))
-                drawBoard();
-        }
+       
 
         private void button6_Click(object sender, EventArgs e)
         {
@@ -849,7 +854,8 @@ namespace GameOfLife
                     loadImagetoPos("GOL5.BMP", coordinates.X, coordinates.Y);
                 else if (radioButton11.Checked)
                     loadImagetoPos("GOL6.BMP", coordinates.X, coordinates.Y);
-
+                else if (radioButton12.Checked)
+                    loadImagetoPos(@patternCustomFileName, coordinates.X, coordinates.Y);
 
             if (timer1.Enabled == false)
                 drawBoard();
@@ -903,12 +909,42 @@ namespace GameOfLife
                     delPreviewImage(g, "GOL5.BMP", oldMousePos.Item1, oldMousePos.Item2);
                 else if (radioButton11.Checked)
                     delPreviewImage(g, "GOL6.BMP", oldMousePos.Item1, oldMousePos.Item2);
-
+                else if (radioButton12.Checked)
+                    delPreviewImage(g, @patternCustomFileName, oldMousePos.Item1, oldMousePos.Item2);
                 oldMousePos = mousePos;
 
             }
             }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                
+                openFileDialog.InitialDirectory = Path.Combine(Application.StartupPath,@"Pictures");
+                openFileDialog.Filter = "Bitmap (*.bmp)|*.bmp|All files (*.*)|*.*";
+                openFileDialog.FilterIndex = 1;
+                openFileDialog.RestoreDirectory = true;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    //Get the path of specified file
+                    string filePath = openFileDialog.FileName;
+                    radioButton12.Enabled = true;
+                    radioButton12.Checked = true;
+                    patternCustomFileName = filePath;
+                    Debug.WriteLine(patternCustomFileName);
+                    //Read the contents of the file into a stream
+                    //var fileStream = openFileDialog.OpenFile();
+
+                    /*using (StreamReader reader = new StreamReader(fileStream))
+                    {
+                        fileContent = reader.ReadToEnd();
+                    }*/
+                }
+            }
         }
+    }
 
     public static class GraphicsExtensions
     {

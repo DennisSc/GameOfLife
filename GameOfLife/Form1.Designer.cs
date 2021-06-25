@@ -37,8 +37,6 @@ namespace GameOfLife
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -57,6 +55,8 @@ namespace GameOfLife
             this.radioButton7 = new System.Windows.Forms.RadioButton();
             this.radioButton6 = new System.Windows.Forms.RadioButton();
             this.radioButton5 = new System.Windows.Forms.RadioButton();
+            this.button4 = new System.Windows.Forms.Button();
+            this.radioButton12 = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -135,35 +135,14 @@ namespace GameOfLife
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.button5);
             this.groupBox1.Controls.Add(this.button4);
             this.groupBox1.Controls.Add(this.button2);
             this.groupBox1.Location = new System.Drawing.Point(28, 130);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(94, 113);
+            this.groupBox1.Size = new System.Drawing.Size(94, 87);
             this.groupBox1.TabIndex = 7;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Patterns";
-            // 
-            // button5
-            // 
-            this.button5.Location = new System.Drawing.Point(9, 77);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(75, 23);
-            this.button5.TabIndex = 3;
-            this.button5.Text = "GOL3";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
-            // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(9, 48);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 2;
-            this.button4.Text = "GOL2";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.groupBox1.Text = "Load Bitmap";
             // 
             // label4
             // 
@@ -279,6 +258,7 @@ namespace GameOfLife
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.radioButton12);
             this.groupBox3.Controls.Add(this.radioButton11);
             this.groupBox3.Controls.Add(this.radioButton10);
             this.groupBox3.Controls.Add(this.radioButton9);
@@ -286,9 +266,9 @@ namespace GameOfLife
             this.groupBox3.Controls.Add(this.radioButton7);
             this.groupBox3.Controls.Add(this.radioButton6);
             this.groupBox3.Controls.Add(this.radioButton5);
-            this.groupBox3.Location = new System.Drawing.Point(28, 264);
+            this.groupBox3.Location = new System.Drawing.Point(28, 223);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(121, 193);
+            this.groupBox3.Size = new System.Drawing.Size(121, 265);
             this.groupBox3.TabIndex = 14;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Klick Pattern";
@@ -296,7 +276,7 @@ namespace GameOfLife
             // radioButton11
             // 
             this.radioButton11.AutoSize = true;
-            this.radioButton11.Location = new System.Drawing.Point(7, 163);
+            this.radioButton11.Location = new System.Drawing.Point(7, 191);
             this.radioButton11.Name = "radioButton11";
             this.radioButton11.Size = new System.Drawing.Size(107, 17);
             this.radioButton11.TabIndex = 6;
@@ -307,7 +287,7 @@ namespace GameOfLife
             // radioButton10
             // 
             this.radioButton10.AutoSize = true;
-            this.radioButton10.Location = new System.Drawing.Point(7, 140);
+            this.radioButton10.Location = new System.Drawing.Point(7, 168);
             this.radioButton10.Name = "radioButton10";
             this.radioButton10.Size = new System.Drawing.Size(98, 17);
             this.radioButton10.TabIndex = 5;
@@ -318,7 +298,7 @@ namespace GameOfLife
             // radioButton9
             // 
             this.radioButton9.AutoSize = true;
-            this.radioButton9.Location = new System.Drawing.Point(7, 116);
+            this.radioButton9.Location = new System.Drawing.Point(7, 144);
             this.radioButton9.Name = "radioButton9";
             this.radioButton9.Size = new System.Drawing.Size(83, 17);
             this.radioButton9.TabIndex = 4;
@@ -329,7 +309,7 @@ namespace GameOfLife
             // radioButton8
             // 
             this.radioButton8.AutoSize = true;
-            this.radioButton8.Location = new System.Drawing.Point(7, 92);
+            this.radioButton8.Location = new System.Drawing.Point(7, 120);
             this.radioButton8.Name = "radioButton8";
             this.radioButton8.Size = new System.Drawing.Size(62, 17);
             this.radioButton8.TabIndex = 3;
@@ -340,7 +320,7 @@ namespace GameOfLife
             // radioButton7
             // 
             this.radioButton7.AutoSize = true;
-            this.radioButton7.Location = new System.Drawing.Point(7, 68);
+            this.radioButton7.Location = new System.Drawing.Point(7, 96);
             this.radioButton7.Name = "radioButton7";
             this.radioButton7.Size = new System.Drawing.Size(52, 17);
             this.radioButton7.TabIndex = 2;
@@ -351,7 +331,7 @@ namespace GameOfLife
             // radioButton6
             // 
             this.radioButton6.AutoSize = true;
-            this.radioButton6.Location = new System.Drawing.Point(7, 44);
+            this.radioButton6.Location = new System.Drawing.Point(7, 72);
             this.radioButton6.Name = "radioButton6";
             this.radioButton6.Size = new System.Drawing.Size(56, 17);
             this.radioButton6.TabIndex = 1;
@@ -363,13 +343,35 @@ namespace GameOfLife
             // 
             this.radioButton5.AutoSize = true;
             this.radioButton5.Checked = true;
-            this.radioButton5.Location = new System.Drawing.Point(7, 20);
+            this.radioButton5.Location = new System.Drawing.Point(7, 48);
             this.radioButton5.Name = "radioButton5";
             this.radioButton5.Size = new System.Drawing.Size(106, 17);
             this.radioButton5.TabIndex = 0;
             this.radioButton5.TabStop = true;
             this.radioButton5.Text = "GosperGliderGun";
             this.radioButton5.UseVisualStyleBackColor = true;
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(9, 49);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(75, 23);
+            this.button4.TabIndex = 2;
+            this.button4.Text = "Open File";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // radioButton12
+            // 
+            this.radioButton12.AutoSize = true;
+            this.radioButton12.Enabled = false;
+            this.radioButton12.Location = new System.Drawing.Point(7, 25);
+            this.radioButton12.Name = "radioButton12";
+            this.radioButton12.Size = new System.Drawing.Size(86, 17);
+            this.radioButton12.TabIndex = 7;
+            this.radioButton12.TabStop = true;
+            this.radioButton12.Text = "Custom BMP";
+            this.radioButton12.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -418,7 +420,6 @@ namespace GameOfLife
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
@@ -428,7 +429,6 @@ namespace GameOfLife
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.RadioButton radioButton3;
         private System.Windows.Forms.RadioButton radioButton4;
-        private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.RadioButton radioButton5;
@@ -438,6 +438,8 @@ namespace GameOfLife
         private System.Windows.Forms.RadioButton radioButton8;
         private System.Windows.Forms.RadioButton radioButton10;
         private System.Windows.Forms.RadioButton radioButton11;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.RadioButton radioButton12;
     }
 }
 
