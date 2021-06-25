@@ -34,6 +34,8 @@ namespace GameOfLife
 
         Bitmap bmp = new Bitmap((WidthX * gridSize) + (gridSize), (WidthY * gridSize) + (gridSize), System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
 
+        Bitmap thumbnail = new Bitmap(50, 50, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
         static string patternCustomFileName = "pictures\\GOL1.bmp";
 
         static Tuple<int, int> mousePos = new Tuple<int, int>(0, 0);
@@ -230,12 +232,13 @@ namespace GameOfLife
         {
             if (timer1.Enabled)
             {
+                button1.Text = "Start / Stop";
                 timer1.Stop();
                 timer2.Stop();
             }
             else
             {
-                //drawBoard();
+                button1.Text = "Stop";
                 timer1.Start();
                 timer2.Start();
             }
@@ -459,8 +462,8 @@ namespace GameOfLife
         private void loadImagefromBMP(string BMPname)
         {
             image1 = new Bitmap(BMPname, true);
-            label1.Text = "BMP format: " + Environment.NewLine + image1.PixelFormat.ToString() + Environment.NewLine;
-            label1.Text += image1.Height + "x" + image1.Width;
+            label1.Text = Path.GetFileName(BMPname) + Environment.NewLine + image1.PixelFormat.ToString().Substring(6) + Environment.NewLine;
+            label1.Text += image1.Height + " x " + image1.Width;
 
             int x, y;
 
@@ -488,7 +491,7 @@ namespace GameOfLife
             image1 = new Bitmap(BMPname, true);
 
             label1.Text = Path.GetFileName(BMPname) + Environment.NewLine + image1.PixelFormat.ToString().Substring(6) + Environment.NewLine;
-            label1.Text += image1.Height + "x" + image1.Width;
+            label1.Text += image1.Height + " x " + image1.Width;
 
             Debug.WriteLine("(Xoffset / gridSize): {0}", (Xoffset / gridSize));
             Debug.WriteLine("(Yoffset / gridSize): {0}", (Yoffset / gridSize));
@@ -848,6 +851,9 @@ namespace GameOfLife
                     {
                         label1.Text = Path.GetFileName(patternCustomFileName) + Environment.NewLine + image1.PixelFormat.ToString() + Environment.NewLine;
                         label1.Text += image1.Height + " x " + image1.Width;
+
+                        thumbnail = GraphicsExtensions.ScaleImage(image1, 100, 100);
+                        this.pictureBox2.Image = thumbnail;
                     }
                     Debug.WriteLine(patternCustomFileName);
                     //Read the contents of the file into a stream
@@ -899,7 +905,38 @@ namespace GameOfLife
             // Fill rectangle to screen.
             g.FillRectangle(brush, rect);
         }
-        
+
+        public static Bitmap ResizeBitmap(Bitmap bmp, int width, int height)
+        {
+            Bitmap result = new Bitmap(width, height);
+            using (Graphics g = Graphics.FromImage(result))
+            {
+                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+                g.DrawImage(bmp, 0, 0, width, height);
+            }
+
+            return result;
+        }
+
+        public static Bitmap ScaleImage(Bitmap bmp, int maxWidth, int maxHeight)
+        {
+            var ratioX = (double)maxWidth / bmp.Width;
+            var ratioY = (double)maxHeight / bmp.Height;
+            var ratio = Math.Min(ratioX, ratioY);
+
+            var newWidth = (int)(bmp.Width * ratio);
+            var newHeight = (int)(bmp.Height * ratio);
+
+            var newImage = new Bitmap(newWidth, newHeight);
+
+            using (var graphics = Graphics.FromImage(newImage))
+            {
+                graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None;
+                graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+                graphics.DrawImage(bmp, 0, 0, newWidth, newHeight);
+            }
+            return newImage;
+        }
 
     }
 }
