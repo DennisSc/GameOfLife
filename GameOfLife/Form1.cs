@@ -17,7 +17,7 @@ namespace GameOfLife
     {
 
         
-        Bitmap crosshairCursorBitmap = (Bitmap)Bitmap.FromFile("crosshair.png");
+        Bitmap crosshairCursorBitmap = (Bitmap)(new Bitmap(Properties.Resources.crosshair));
         Cursor redCrosshairCursor;
 
 
@@ -136,6 +136,8 @@ namespace GameOfLife
             InitializeComponent();
 
             resizePicBox();
+
+            this.Icon = Properties.Resources.CGOL;
 
             crosshairCursorBitmap.MakeTransparent(Color.DarkGoldenrod);
             //IntPtr ptr1 = crosshairCursorBitmap.GetHicon();
@@ -540,11 +542,16 @@ namespace GameOfLife
         private void loadImagetoPos(string BMPname, int Xoffset, int Yoffset)
         {
             
-            
-            image1 = new Bitmap(BMPname, true);
+            if (radioButton5.Checked)
+            {
+                image1 = new Bitmap(Properties.Resources._1pxblack);
+            }
+            else
+                image1 = new Bitmap(BMPname, true);
 
-            label1.Text = Path.GetFileName(BMPname) + Environment.NewLine + image1.PixelFormat.ToString().Substring(6) + Environment.NewLine;
-            label1.Text += image1.Height + " x " + image1.Width;
+            label1.Text = Path.GetFileName(BMPname) + Environment.NewLine 
+                        + image1.PixelFormat.ToString().Substring(6) + Environment.NewLine
+                        + image1.Height + " x " + image1.Width;
 
             Debug.WriteLine("(Xoffset / gridSize): {0}", (Xoffset / gridSize));
             Debug.WriteLine("(Yoffset / gridSize): {0}", (Yoffset / gridSize));
@@ -604,14 +611,19 @@ namespace GameOfLife
             string BMPname = "";
 
             if (radioButton12.Checked)
+            {
                 BMPname = @patternCustomFileName;
+                image1 = new Bitmap(BMPname, true);
+            }
             else if (radioButton5.Checked)
+            {
                 BMPname = "1pxblack.bmp";
-
+                image1 = (Bitmap)(new Bitmap(Properties.Resources._1pxblack));
+            }
             if (BMPname == "")
                 return;
 
-            image1 = new Bitmap(BMPname, true);
+            
 
             
 
@@ -691,14 +703,20 @@ namespace GameOfLife
             string BMPname = "";
 
             if (radioButton12.Checked)
+            {
                 BMPname = @patternCustomFileName;
+                image1 = new Bitmap(BMPname, true);
+            }
             else if (radioButton5.Checked)
+            {
                 BMPname = "1pxblack.bmp";
+                image1 = (Bitmap)(new Bitmap(Properties.Resources._1pxblack));
+            }
 
             if (BMPname == "")
                 return;
 
-            image1 = new Bitmap(BMPname, true);
+            
 
 
 
@@ -959,6 +977,12 @@ namespace GameOfLife
             drawBoard();
             if (isTimer1Enabled)
                 timer1.Start();
+        }
+
+        private void radioButton5_CheckedChanged(object sender, EventArgs e)
+        {
+            label1.Text = Path.GetFileName(patternCustomFileName) + Environment.NewLine + image1.PixelFormat.ToString() + Environment.NewLine;
+            label1.Text += image1.Height + " x " + image1.Width;
         }
     }
 

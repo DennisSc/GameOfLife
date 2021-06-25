@@ -285,6 +285,7 @@ namespace GameOfLife
             this.radioButton5.TabStop = true;
             this.radioButton5.Text = "Single pixel";
             this.radioButton5.UseVisualStyleBackColor = true;
+            this.radioButton5.CheckedChanged += new System.EventHandler(this.radioButton5_CheckedChanged);
             // 
             // button4
             // 
@@ -383,6 +384,7 @@ namespace GameOfLife
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1095, 992);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.label7);
