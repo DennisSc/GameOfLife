@@ -105,6 +105,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="crosshair.bmp" />
+    <Content Include="crosshair.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="pictures\119P4H1V0.bmp">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

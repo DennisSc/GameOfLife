@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -14,6 +15,12 @@ namespace GameOfLife
 {
     public partial class Form1 : Form
     {
+
+        
+        Bitmap crosshairCursorBitmap = (Bitmap)Bitmap.FromFile("crosshair.png");
+        Cursor redCrosshairCursor;
+
+
         const int healthCondition1 = 2; // two adjacent dots required to survive
         const int healthCondition2 = 3; // three adjacent dots required to grow
 
@@ -21,6 +28,9 @@ namespace GameOfLife
 
         const int WidthX = 345; // X dimension of cell grid
         const int WidthY = 185; // Y dimension of cell grid
+
+        //const int WidthX = 325; // X dimension of cell grid
+        //const int WidthY = 165; // Y dimension of cell grid
 
         const int Xoffset = 160; //X offset from upper left corner of window
         const int Yoffset = 40;
@@ -40,10 +50,8 @@ namespace GameOfLife
 
         static Tuple<int, int> mousePos = new Tuple<int, int>(0, 0);
         static Tuple<int, int> oldMousePos = new Tuple<int, int>(0, 0);
-
         static bool isMouseOverPic = false;
 
-        static bool picWasSaved = false;
 
         Stopwatch frameStopwatch = new Stopwatch();
         double frameCounter = 0;
@@ -83,16 +91,61 @@ namespace GameOfLife
 
         Bitmap image1;
 
+
+
+
+
+        public struct IconInfo
+        {
+            public bool fIcon;
+            public int xHotspot;
+            public int yHotspot;
+            public IntPtr hbmMask;
+            public IntPtr hbmColor;
+        }
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool GetIconInfo(IntPtr hIcon, ref IconInfo pIconInfo);
+        [DllImport("user32.dll")]
+        public static extern IntPtr CreateIconIndirect(ref IconInfo icon);
+
+        /// <summary>
+        /// Create a cursor from a bitmap without resizing and with the specified
+        /// hot spot
+        /// </summary>
+        public static Cursor CreateCursorNoResize(Bitmap bmp, int xHotSpot, int yHotSpot)
+        {
+            IntPtr ptr = bmp.GetHicon();
+            IconInfo tmp = new IconInfo();
+            GetIconInfo(ptr, ref tmp);
+            tmp.xHotspot = xHotSpot;
+            tmp.yHotspot = yHotSpot;
+            tmp.fIcon = false;
+            ptr = CreateIconIndirect(ref tmp);
+            return new Cursor(ptr);
+        }
+
+
+
+
+
+
+
         public Form1()
         {
             InitializeComponent();
 
             resizePicBox();
 
+            crosshairCursorBitmap.MakeTransparent(Color.DarkGoldenrod);
+            //IntPtr ptr1 = crosshairCursorBitmap.GetHicon();
+            //redCrosshairCursor = new Cursor(ptr1);
+            redCrosshairCursor = CreateCursorNoResize(crosshairCursorBitmap, 15, 15);
+
             using (var g = Graphics.FromImage(bmp))
             {
 
-                Rectangle rect = new Rectangle(0, 0, (WidthX * gridSize) + 2*gridSize, (WidthY * gridSize) + 2*gridSize);
+                Rectangle rect = new Rectangle(0, 0, (WidthX * gridSize) + 2*gridSize + (gridSize / 2), (WidthY * gridSize) + 2*gridSize + (gridSize / 2));
 
                 // Fill rectangle to screen.
                 g.FillRectangle(backcolor, rect);
@@ -132,7 +185,7 @@ namespace GameOfLife
             timer2.Interval = 333;
             timer2.Tick += Timer2_Tick;
 
-            timer3.Interval = 5;
+            timer3.Interval = 30;
             timer3.Tick += Timer3_Tick;
 
         }
@@ -141,8 +194,8 @@ namespace GameOfLife
         {
             this.Size = new Size(WidthX * gridSize - 220, WidthY * gridSize - 120);
 
-            pictureBox1.Width = (WidthX * gridSize);
-            pictureBox1.Height = (WidthY * gridSize);
+            pictureBox1.Width = ((WidthX * gridSize) + (gridSize / 2 + (gridSize % 2 > 0 ? 1 : 0))); // x/y + (x % y > 0 ? 1 : 0)
+            pictureBox1.Height = ((WidthY * gridSize) + (gridSize / 2 + (gridSize % 2 > 0 ? 1 : 0)));
             pictureBox1.Refresh();
 
             //this.Width =  WidthX * gridSize;
@@ -198,9 +251,9 @@ namespace GameOfLife
 
             double drawavg = drawAvg / frameCounter;
             double calcavg = calcAvg / frameCounter;
-            label5.Text = calcavg.ToString("0.000");
-            label6.Text = drawavg.ToString("0.000");
-            label4.Text = ((drawAvg + calcAvg) / frameCounter).ToString("0.000");
+            label5.Text = calcavg.ToString("0.000") + " ms";
+            label6.Text = drawavg.ToString("0.000") + " ms";
+            label4.Text = ((drawAvg + calcAvg) / frameCounter).ToString("0.000") + " ms";
             frameCounter = 0;
             drawAvg = 0;
             calcAvg = 0;
@@ -560,16 +613,11 @@ namespace GameOfLife
 
             image1 = new Bitmap(BMPname, true);
 
-           
+            
 
-            if (
-                //((Xoffset / gridSize) > (image1.Width)) && 
-                //((Yoffset / gridSize) > (image1.Height)) && 
+            if (                
                 (((Xoffset / gridSize) + (image1.Width)) < (WidthX)) &&
                 (((Yoffset / gridSize) + (image1.Height)) < (WidthY))
-
-                //((Xoffset / gridSize) < (WidthX - (image1.Width / 2) - 1)) && 
-                //((Yoffset / gridSize) < (WidthY - (image1.Height / 2) - 1))
                 )
             {
 
@@ -580,9 +628,31 @@ namespace GameOfLife
 
                 int x, y;
 
+                int _xoffset = Xoffset - (Xoffset % gridSize);
+                int _yoffset = Yoffset - (Yoffset % gridSize);
+
+                // draw frame around pixels
+
+                //SolidBrush FrameColor = new SolidBrush(Color.LightGoldenrodYellow);
+                SolidBrush FrameColor = new SolidBrush(Color.Yellow);
+
+                if (radioButton12.Checked)
+                {
+                    for (x = image1.Width; x > 0;  x--)
+                    {
+                        GraphicsExtensions.FillRectangle(g, FrameColor, _xoffset + x * gridSize + cellSize, _yoffset + cellSize, cellSize);
+                        GraphicsExtensions.FillRectangle(g, FrameColor, _xoffset + x * gridSize + cellSize, _yoffset + image1.Height * gridSize + cellSize, cellSize);
+                    }
+                    for (y = image1.Height; y >= 0;  y--)
+                    {
+                        GraphicsExtensions.FillRectangle(g, FrameColor, _xoffset + cellSize, _yoffset + y * gridSize + cellSize, cellSize);
+                        GraphicsExtensions.FillRectangle(g, FrameColor, _xoffset + image1.Width * gridSize + cellSize, _yoffset + y * gridSize + cellSize, cellSize);
+                    }
+                }
+
                 // Loop through the images pixels
-                
-                    for (y = 0; y < image1.Height; y++)
+
+                for (y = 0; y < image1.Height; y++)
                     {
                         for (x = 0; x < image1.Width; x++)
                         {
@@ -594,7 +664,7 @@ namespace GameOfLife
                             //Debug.WriteLine("Pixel: " + x + ":" + y + " - pixelcolor: " + pixelColor + " - empty: " + empty);
                             if (pixelColor < -65794)
 
-                                GraphicsExtensions.FillRectangle(g, new SolidBrush(Color.DarkGray), Xoffset + x * gridSize + cellSize, Yoffset + y * gridSize + cellSize, cellSize);
+                                GraphicsExtensions.FillRectangle(g, new SolidBrush(Color.LightSeaGreen), _xoffset + x * gridSize + cellSize, _yoffset + y * gridSize + cellSize, cellSize);
 
                             //else
                                 //GraphicsExtensions.FillRectangle(g, backcolor, Xoffset + x * gridSize + cellSize, Yoffset + y * gridSize + cellSize, cellSize);
@@ -633,13 +703,8 @@ namespace GameOfLife
 
 
             if (
-                //((Xoffset / gridSize) > (image1.Width)) && 
-                //((Yoffset / gridSize) > (image1.Height)) && 
                 (((Xoffset / gridSize) + (image1.Width)) < (WidthX)) &&
                 (((Yoffset / gridSize) + (image1.Height)) < (WidthY))
-
-                //((Xoffset / gridSize) < (WidthX - (image1.Width / 2) - 1)) && 
-                //((Yoffset / gridSize) < (WidthY - (image1.Height / 2) - 1))
                 )
             {
 
@@ -649,6 +714,23 @@ namespace GameOfLife
 
 
                 int x, y;
+
+                int _xoffset = Xoffset - (Xoffset % gridSize);
+                int _yoffset = Yoffset - (Yoffset % gridSize);
+
+                if (radioButton12.Checked)
+                {
+                    for (x = image1.Width; x > 0; x--)
+                    {
+                        GraphicsExtensions.FillRectangle(g, backcolor, _xoffset + x * gridSize + cellSize, _yoffset + cellSize, cellSize);
+                        GraphicsExtensions.FillRectangle(g, backcolor, _xoffset + x * gridSize + cellSize, _yoffset + image1.Height * gridSize + cellSize, cellSize);
+                    }
+                    for (y = image1.Height; y >= 0; y--)
+                    {
+                        GraphicsExtensions.FillRectangle(g, backcolor, _xoffset + cellSize, _yoffset + y * gridSize + cellSize, cellSize);
+                        GraphicsExtensions.FillRectangle(g, backcolor, _xoffset + image1.Width * gridSize + cellSize, _yoffset + y * gridSize + cellSize, cellSize);
+                    }
+                }
 
                 // Loop through the images pixels
 
@@ -663,7 +745,7 @@ namespace GameOfLife
                         //Debug.WriteLine("PosX: {0}   PosY: {1}", posX, posY);
                         //Debug.WriteLine("Pixel: " + x + ":" + y + " - pixelcolor: " + pixelColor + " - empty: " + empty);
                         if (pixelColor < -65794)
-                            GraphicsExtensions.FillRectangle(g, backcolor, Xoffset + x * gridSize + cellSize, Yoffset + y * gridSize + cellSize, cellSize);
+                            GraphicsExtensions.FillRectangle(g, backcolor, _xoffset + x * gridSize + cellSize, _yoffset + y * gridSize + cellSize, cellSize);
 
                     }
                 }
@@ -777,12 +859,12 @@ namespace GameOfLife
             Point coordinates = me.Location;
             Debug.WriteLine(coordinates.ToString());
             if (me.Button == MouseButtons.Left)
-                //if (radioButton5.Checked)
-                  //  loadImagetoPos("1pxblack.BMP", coordinates.X, coordinates.Y);
-                /*else*/ if (radioButton12.Checked)
+                if (radioButton5.Checked)
+                    loadImagetoPos("1pxblack.BMP", coordinates.X, coordinates.Y);
+                else if (radioButton12.Checked)
                     loadImagetoPos(@patternCustomFileName, coordinates.X, coordinates.Y);
 
-            //if (timer1.Enabled == false)
+            if (timer1.Enabled == false)
                 drawBoard();
             
 
@@ -794,23 +876,22 @@ namespace GameOfLife
             //MouseEventArgs me = (MouseEventArgs)e;
             Point coordinates = e.Location;
             //Debug.WriteLine(coordinates.ToString());
+            
+            mousePos = new Tuple<int, int>(coordinates.X, coordinates.Y);
             if (e.Button == MouseButtons.Left)
                 if (radioButton5.Checked)
-                    loadImagetoPos("1pxblack.BMP", coordinates.X, coordinates.Y);
-            mousePos = new Tuple<int, int>(coordinates.X, coordinates.Y);
-            if (picWasSaved)
-            {
-                picWasSaved = false;
-                
-            }
-            
+                    if (mousePos.Item1 >= 0 && mousePos.Item2 >= 0)
+                        loadImagetoPos("1pxblack.BMP", coordinates.X, coordinates.Y);
+
+
         }
 
         private void pictureBox1_MouseEnter(object sender, EventArgs e)
         {
             isMouseOverPic = true;
-            Cursor myCursor = new Cursor(Application.StartupPath + "\\Cursor1.cur");
-            pictureBox1.Cursor = myCursor;
+            //Cursor myCursor = new Cursor(Application.StartupPath + "\\Cursor1.cur");
+            //pictureBox1.Cursor = myCursor;
+            pictureBox1.Cursor = redCrosshairCursor;
             if (timer1.Enabled == false)
                 timer3.Start();
         }

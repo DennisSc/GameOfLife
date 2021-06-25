@@ -154,7 +154,7 @@ namespace GameOfLife
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(77, 828);
+            this.label4.Location = new System.Drawing.Point(86, 828);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(24, 13);
             this.label4.TabIndex = 8;
@@ -163,7 +163,7 @@ namespace GameOfLife
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(77, 784);
+            this.label5.Location = new System.Drawing.Point(86, 784);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(24, 13);
             this.label5.TabIndex = 9;
@@ -172,7 +172,7 @@ namespace GameOfLife
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(77, 806);
+            this.label6.Location = new System.Drawing.Point(86, 806);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(24, 13);
             this.label6.TabIndex = 10;
@@ -335,29 +335,29 @@ namespace GameOfLife
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(12, 806);
+            this.label7.Location = new System.Drawing.Point(13, 806);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(65, 13);
+            this.label7.Size = new System.Drawing.Size(68, 13);
             this.label7.TabIndex = 18;
-            this.label7.Text = "RenderTime";
+            this.label7.Text = "RenderTime:";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(12, 784);
+            this.label8.Location = new System.Drawing.Point(13, 784);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(51, 13);
+            this.label8.Size = new System.Drawing.Size(54, 13);
             this.label8.TabIndex = 17;
-            this.label8.Text = "CalcTime";
+            this.label8.Text = "CalcTime:";
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(12, 828);
+            this.label9.Location = new System.Drawing.Point(13, 828);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(59, 13);
+            this.label9.Size = new System.Drawing.Size(62, 13);
             this.label9.TabIndex = 16;
-            this.label9.Text = "FrameTime";
+            this.label9.Text = "FrameTime:";
             // 
             // groupBox5
             // 
