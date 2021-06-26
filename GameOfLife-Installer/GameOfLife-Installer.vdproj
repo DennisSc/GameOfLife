@@ -225,7 +225,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:GameOfLife"
         "ProductCode" = "8:{13F2F923-DD35-4F81-8E5C-C243C4DAB811}"
-        "PackageCode" = "8:{77FB2822-35D4-45F2-B886-00F894718C06}"
+        "PackageCode" = "8:{09F7138A-5157-4BD8-9D69-74E6B7637A23}"
         "UpgradeCode" = "8:{A04850DB-1C70-4E82-81D0-A96E105978A5}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
@@ -758,6 +758,34 @@
         }
         "ProjectOutput"
         {
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_0A203F9180B043389EAD1026CE4478BF"
+            {
+            "SourcePath" = "8:"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_1BCC5237B4324E9D8458D16C69D66394"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:ContentFiles"
+            "OutputProjectGuid" = "8:{5F970575-05C6-49DB-873C-46FF3D15532F}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_2D9290B38BC344A89FD92D6F436F923F"
             {
             "SourcePath" = "8:..\\GameOfLife\\obj\\x64\\Release\\GameOfLife.exe"

@@ -123,11 +123,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="CGOL.ico" />
-    <Content Include="crosshair.png" />
+    <EmbeddedResource Include="crosshair.png" />
     <Content Include="pictures\119P4H1V0.bmp">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="1pxblack.bmp" />
+    <EmbeddedResource Include="1pxblack.bmp" />
     <Content Include="pictures\GOL1.bmp">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
