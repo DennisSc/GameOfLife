@@ -1002,6 +1002,17 @@ namespace GameOfLife
             {
                 resizePicBox();
 
+                using (var g = Graphics.FromImage(bmp))
+                {
+
+                    Rectangle rect = new Rectangle(0, 0, (WidthX * gridSize) + 2 * gridSize + (gridSize / 2), (WidthY * gridSize) + 2 * gridSize + (gridSize / 2));
+
+                    // Fill rectangle to screen.
+                    g.FillRectangle(backcolor, rect);
+
+                    this.pictureBox1.Image = bmp;
+                }
+
                 board = new bool[WidthX, WidthY];
                 oldboard = new bool[WidthX, WidthY];
 
