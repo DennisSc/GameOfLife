@@ -26,8 +26,8 @@ namespace GameOfLife
 
         static int speed = 50; // time in ms between cycles
 
-        const int WidthX = 345; // X dimension of cell grid
-        const int WidthY = 185; // Y dimension of cell grid
+        public static int WidthX = 345; // X dimension of cell grid
+        public static int WidthY = 185; // Y dimension of cell grid
 
         //const int WidthX = 325; // X dimension of cell grid
         //const int WidthY = 165; // Y dimension of cell grid
@@ -35,9 +35,12 @@ namespace GameOfLife
         const int Xoffset = 160; //X offset from upper left corner of window
         const int Yoffset = 40;
 
-        const int gridSize = 5; // distance between grids
+        public static int gridSize = 5; // distance between grids
 
-        const int cellSize = 4; //radius of dots
+        public static int cellSize = 4; //radius of dots
+
+        public static bool gridChanged = false;
+        public static bool T1wasRunning = false;
 
 
         uint drawMode = 0;
@@ -66,7 +69,7 @@ namespace GameOfLife
 
         static bool[,] board = new bool[WidthX, WidthY];
         static bool[,] oldboard = new bool[WidthX, WidthY];
-        static bool[,] oldoldboard = new bool[WidthX, WidthY];
+        //static bool[,] oldoldboard = new bool[WidthX, WidthY];
         static bool[][,] rgbboardhistory = new bool[7][,]; //[ new bool[WidthX,WidthY]; // = new bool[,]>();
         static Color[] ShadowColors = new Color[] { Color.FromArgb(237,213,186),
                                                     Color.FromArgb(228,200,156),
@@ -83,9 +86,9 @@ namespace GameOfLife
         static Random rand = new Random();
 
 
-        static Timer timer1 = new Timer();
+        public static Timer timer1 = new Timer();
 
-        static Timer timer2 = new Timer();
+        public static Timer timer2 = new Timer();
 
         static Timer timer3 = new Timer();
 
@@ -983,6 +986,59 @@ namespace GameOfLife
         {
             label1.Text = Path.GetFileName(patternCustomFileName) + Environment.NewLine + image1.PixelFormat.ToString() + Environment.NewLine;
             label1.Text += image1.Height + " x " + image1.Width;
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            Form2 settingsForm = new Form2();
+
+            
+
+
+            // Show the settings form
+            settingsForm.ShowDialog();
+
+            if (gridChanged)
+            {
+                resizePicBox();
+
+                board = new bool[WidthX, WidthY];
+                oldboard = new bool[WidthX, WidthY];
+
+
+                for (int n = 0; n < 7; n++)
+                    rgbboardhistory[n] = new bool[WidthX, WidthY];
+
+
+
+                for (int i = 0; i < WidthX; i++)
+                    for (int j = 0; j < WidthY; j++)
+                    {
+
+                        board[i, j] = false;
+                    }
+
+                for (int n = 0; n < rgbboardhistory.Length; n++)
+                    for (int i = 0; i < WidthX; i++)
+                    {
+                        for (int j = 0; j < WidthY; j++)
+                        {
+                            rgbboardhistory[n][i, j] = false;
+                        }
+                    }
+
+                drawBoard();
+
+                if (T1wasRunning)
+                {
+                    timer1.Start();
+                    timer2.Start();
+                    T1wasRunning = false;
+                }
+
+
+                gridChanged = false;
+            }
         }
     }
 
