@@ -157,7 +157,7 @@ namespace GameOfLife
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(80, 69);
+            this.label4.Location = new System.Drawing.Point(72, 69);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(24, 13);
             this.label4.TabIndex = 8;
@@ -166,7 +166,7 @@ namespace GameOfLife
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(80, 25);
+            this.label5.Location = new System.Drawing.Point(72, 25);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(24, 13);
             this.label5.TabIndex = 9;
@@ -175,7 +175,7 @@ namespace GameOfLife
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(80, 47);
+            this.label6.Location = new System.Drawing.Point(72, 47);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(24, 13);
             this.label6.TabIndex = 10;
@@ -340,7 +340,7 @@ namespace GameOfLife
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(7, 47);
+            this.label7.Location = new System.Drawing.Point(6, 47);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(68, 13);
             this.label7.TabIndex = 18;
@@ -349,7 +349,7 @@ namespace GameOfLife
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(7, 25);
+            this.label8.Location = new System.Drawing.Point(6, 25);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(54, 13);
             this.label8.TabIndex = 17;
@@ -358,7 +358,7 @@ namespace GameOfLife
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(7, 69);
+            this.label9.Location = new System.Drawing.Point(6, 69);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(62, 13);
             this.label9.TabIndex = 16;
@@ -428,6 +428,7 @@ namespace GameOfLife
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Game of Life";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

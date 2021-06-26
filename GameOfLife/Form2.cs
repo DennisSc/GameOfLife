@@ -20,6 +20,7 @@ namespace GameOfLife
             textBox2.Text = Form1.WidthY.ToString();
             textBox3.Text = Form1.cellSize.ToString();
             textBox4.Text = (Form1.gridSize - Form1.cellSize).ToString();
+            this.KeyPreview = true;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -32,8 +33,12 @@ namespace GameOfLife
             {
                 Form1.timer1.Stop();
                 Form1.timer2.Stop();
+               
                 Form1.T1wasRunning = true;
             }
+
+            Form1.oldWidthX = Form1.WidthX;
+            Form1.oldWidthY = Form1.WidthY;
 
             int newX;
             bool Xresult = int.TryParse(textBox1.Text, out newX);
@@ -75,6 +80,19 @@ namespace GameOfLife
             Form1.gridChanged = false;
             Form1.T1wasRunning = false;
             this.Close();
+        }
+
+        private void Form2_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                button1_Click(this, e);
+
+            }
+            else if (e.KeyCode == Keys.Escape)
+            {
+                button2_Click(this, e);
+            }
         }
     }
 }

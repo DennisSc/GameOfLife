@@ -151,6 +151,7 @@ namespace GameOfLife
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "GameOfLife - Change Grid Size";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form2_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 

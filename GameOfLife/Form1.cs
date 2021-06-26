@@ -29,6 +29,9 @@ namespace GameOfLife
         public static int WidthX = 345; // X dimension of cell grid
         public static int WidthY = 185; // Y dimension of cell grid
 
+        public static int oldWidthX = WidthX; // X dimension of cell grid
+        public static int oldWidthY = WidthY; // Y dimension of cell grid
+
         //const int WidthX = 325; // X dimension of cell grid
         //const int WidthY = 165; // Y dimension of cell grid
 
@@ -42,6 +45,9 @@ namespace GameOfLife
         public static bool gridChanged = false;
         public static bool T1wasRunning = false;
 
+        bool showFullScreen = false;
+        Point oldLocation;
+        bool hideControls = false;
 
         uint drawMode = 0;
 
@@ -139,6 +145,9 @@ namespace GameOfLife
             InitializeComponent();
 
             resizePicBox();
+
+            this.KeyPreview = true;
+
 
             this.Icon = Properties.Resources.CGOL;
 
@@ -739,17 +748,63 @@ namespace GameOfLife
                 int _xoffset = Xoffset - (Xoffset % gridSize);
                 int _yoffset = Yoffset - (Yoffset % gridSize);
 
+                
+
+                bool needPixelRestore = false; 
+
                 if (radioButton12.Checked)
                 {
+
+                    
+
+
                     for (x = image1.Width; x > 0; x--)
                     {
-                        GraphicsExtensions.FillRectangle(g, backcolor, _xoffset + x * gridSize + cellSize, _yoffset + cellSize, cellSize);
-                        GraphicsExtensions.FillRectangle(g, backcolor, _xoffset + x * gridSize + cellSize, _yoffset + image1.Height * gridSize + cellSize, cellSize);
+                        int posX = (_xoffset / gridSize) + x;
+                        if (board[posX, (_yoffset / gridSize)] == true)
+                        {
+                            GraphicsExtensions.FillRectangle(g, dotcolor, _xoffset + x * gridSize + cellSize, _yoffset + cellSize, cellSize);
+
+                            needPixelRestore = true;
+                        }
+                        else
+                        {
+                            GraphicsExtensions.FillRectangle(g, backcolor, _xoffset + x * gridSize + cellSize, _yoffset + cellSize, cellSize);
+                        }
+
+                        if (board[posX, ((_yoffset / gridSize) + image1.Height)] == true)
+                        {
+                            
+                            GraphicsExtensions.FillRectangle(g, dotcolor, _xoffset + x * gridSize + cellSize, _yoffset + image1.Height * gridSize + cellSize, cellSize);
+                            needPixelRestore = true;
+                        }
+                        else 
+                        { 
+                            GraphicsExtensions.FillRectangle(g, backcolor, _xoffset + x * gridSize + cellSize, _yoffset + image1.Height * gridSize + cellSize, cellSize);
+                        }
                     }
                     for (y = image1.Height; y >= 0; y--)
                     {
-                        GraphicsExtensions.FillRectangle(g, backcolor, _xoffset + cellSize, _yoffset + y * gridSize + cellSize, cellSize);
-                        GraphicsExtensions.FillRectangle(g, backcolor, _xoffset + image1.Width * gridSize + cellSize, _yoffset + y * gridSize + cellSize, cellSize);
+                        int posY = (_yoffset / gridSize) + y;
+                        if (board[(_xoffset / gridSize), posY] == true)
+                        {
+                            GraphicsExtensions.FillRectangle(g, dotcolor, _xoffset + cellSize, _yoffset + y * gridSize + cellSize, cellSize);
+                            
+                            needPixelRestore = true;
+                        }
+                        else
+                        {
+                            GraphicsExtensions.FillRectangle(g, backcolor, _xoffset + cellSize, _yoffset + y * gridSize + cellSize, cellSize);
+                            
+                        }
+                        if (board[((_xoffset / gridSize) + image1.Width), posY] == true)
+                        {
+                            GraphicsExtensions.FillRectangle(g, dotcolor, _xoffset + image1.Width * gridSize + cellSize, _yoffset + y * gridSize + cellSize, cellSize);
+                        }
+                        else
+                        {
+                            GraphicsExtensions.FillRectangle(g, backcolor, _xoffset + image1.Width * gridSize + cellSize, _yoffset + y * gridSize + cellSize, cellSize);
+                        }
                     }
                 }
 
@@ -759,18 +814,32 @@ namespace GameOfLife
                 {
                     for (x = 0; x < image1.Width; x++)
                     {
-                        int pixelColor = image1.GetPixel(x, y).ToArgb();
-                        int empty = Color.Empty.ToArgb();
-                        int posX = (Xoffset / gridSize) + x;
-                        int posY = (Yoffset / gridSize) + y;
-                        //Debug.WriteLine("PosX: {0}   PosY: {1}", posX, posY);
-                        //Debug.WriteLine("Pixel: " + x + ":" + y + " - pixelcolor: " + pixelColor + " - empty: " + empty);
-                        if (pixelColor < -65794)
-                            GraphicsExtensions.FillRectangle(g, backcolor, _xoffset + x * gridSize + cellSize, _yoffset + y * gridSize + cellSize, cellSize);
-
+                        if ((_xoffset >= 0) && (_yoffset >= 0))
+                        {
+                            int pixelColor = image1.GetPixel(x, y).ToArgb();
+                            int empty = Color.Empty.ToArgb();
+                            int posX = (_xoffset / gridSize) + x;
+                            int posY = (_yoffset / gridSize) + y;
+                            //Debug.WriteLine("_xoffset: {0}", _xoffset);
+                            //Debug.WriteLine("_yoffset: {0}", _yoffset);
+                            //Debug.WriteLine("PosX: {0}   PosY: {1}", posX, posY);
+                            //Debug.WriteLine("Pixel: " + x + ":" + y + " - pixelcolor: " + pixelColor + " - empty: " + empty);
+                            if (pixelColor < -65794)
+                            {
+                                if (board[posX, posY] == true)
+                                {
+                                    GraphicsExtensions.FillRectangle(g, dotcolor, _xoffset + x * gridSize + cellSize, _yoffset + y * gridSize + cellSize, cellSize);
+                                    needPixelRestore = true;
+                                }
+                                else
+                                    GraphicsExtensions.FillRectangle(g, backcolor, _xoffset + x * gridSize + cellSize, _yoffset + y * gridSize + cellSize, cellSize);
+                            }
+                        }
                     }
                 }
 
+                //if (needPixelRestore)
+                    //drawBoard();
 
                 this.pictureBox1.Image = bmp;
 
@@ -1000,7 +1069,8 @@ namespace GameOfLife
 
             if (gridChanged)
             {
-                resizePicBox();
+
+                bmp = new Bitmap((WidthX * gridSize) + (2 * gridSize), (WidthY * gridSize) + (2 * gridSize), System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
 
                 using (var g = Graphics.FromImage(bmp))
                 {
@@ -1013,8 +1083,8 @@ namespace GameOfLife
                     this.pictureBox1.Image = bmp;
                 }
 
-                board = new bool[WidthX, WidthY];
-                oldboard = new bool[WidthX, WidthY];
+                bool[,] newboard = new bool[WidthX, WidthY];
+                bool[,] newoldboard = new bool[WidthX, WidthY];
 
 
                 for (int n = 0; n < 7; n++)
@@ -1022,13 +1092,13 @@ namespace GameOfLife
 
 
 
-                for (int i = 0; i < WidthX; i++)
+                /*for (int i = 0; i < WidthX; i++)
                     for (int j = 0; j < WidthY; j++)
                     {
 
                         board[i, j] = false;
                     }
-
+                */
                 for (int n = 0; n < rgbboardhistory.Length; n++)
                     for (int i = 0; i < WidthX; i++)
                     {
@@ -1037,6 +1107,172 @@ namespace GameOfLife
                             rgbboardhistory[n][i, j] = false;
                         }
                     }
+
+
+
+                if (WidthX <= oldWidthX)
+                    for (int x = 0; x < WidthX; x++)
+                    {
+                        if (WidthY <= oldWidthY)
+                            for (int y = 0; y < WidthY; y++)
+                            {
+                                newboard[x, y] = board[x, y];
+                                newoldboard[x, y] = oldboard[x, y];
+                            }
+                        else
+                            for (int y = 0; y < oldWidthY; y++)
+                            {
+                                newboard[x, y] = board[x, y];
+                                newoldboard[x, y] = oldboard[x, y];
+                            }
+
+                    }
+                else
+                    for (int x = 0; x < oldWidthX; x++)
+                    {
+                        if (WidthY <= oldWidthY)
+                            for (int y = 0; y < WidthY; y++)
+                            {
+                                newboard[x, y] = board[x, y];
+                                newoldboard[x, y] = oldboard[x, y];
+                            }
+                        else
+                            for (int y = 0; y < oldWidthY; y++)
+                            {
+                                newboard[x, y] = board[x, y];
+                                newoldboard[x, y] = oldboard[x, y];
+                            }
+
+                    }
+
+                board = newboard;
+                oldboard = newoldboard;
+
+                newboard = null;
+                newoldboard = null;
+
+                drawBoard();
+                resizePicBox();
+
+                if (T1wasRunning)
+                {
+                    timer1.Start();
+                    timer2.Start();
+                    T1wasRunning = false;
+                    button1.Text = "Stop";
+                }
+                else
+                    button1.Text = "Start / Stop";
+
+
+                gridChanged = false;
+            }
+        }
+
+        private void GoFullscreen(bool fullscreen)
+        {
+            if (fullscreen)
+            {
+                
+                
+                if (timer1.Enabled)
+                {
+                    timer1.Stop();
+                    timer2.Stop();
+                    T1wasRunning = true;
+                }
+
+                var newbounds = Screen.PrimaryScreen.Bounds;
+                int newWidthX = newbounds.Width / gridSize;
+                int newWidthY = newbounds.Height / gridSize;
+                
+                bool[,] newboard = new bool[newWidthX, newWidthY];
+                bool[,] newoldboard = new bool[newWidthX, newWidthY];
+
+                
+                oldLocation = pictureBox1.Location;
+                pictureBox1.Location = new Point(0, 0);
+                pictureBox1.Width = newbounds.Width;
+                pictureBox1.Height = newbounds.Height;
+                pictureBox1.SendToBack();
+
+                bmp = null;
+                bmp = new Bitmap((newWidthX * gridSize) + (2 * gridSize), (newWidthY * gridSize) + (2 * gridSize), System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
+
+                using (var g = Graphics.FromImage(bmp))
+                {
+
+                    Rectangle rect = new Rectangle(0, 0, (newWidthX * gridSize) + 2 * gridSize + (gridSize / 2), (newWidthY * gridSize) + 2 * gridSize + (gridSize / 2));
+
+                    // Fill rectangle to screen.
+                    g.FillRectangle(backcolor, rect);
+
+                    this.pictureBox1.Image = bmp;
+                }
+
+                if (WidthX <= newWidthX)
+                {
+                    for (int x = 0; x < WidthX; x++)
+                    {
+                        if (WidthY <= newWidthY)
+                        {
+                            for (int y = 0; y < WidthY; y++)
+                            {
+                                newboard[x, y] = board[x, y];
+                                newoldboard[x, y] = oldboard[x, y];
+                            }
+                        }
+                        else
+                        {
+                            for (int y = 0; y < newWidthY; y++)
+                            {
+                                newboard[x, y] = board[x, y];
+                                newoldboard[x, y] = oldboard[x, y];
+                            }
+                        }
+
+                    }
+                }
+                else
+                {
+                    for (int x = 0; x < newWidthX; x++)
+                    {
+                        if (WidthY <= newWidthY)
+                        {
+                            for (int y = 0; y < WidthY; y++)
+                            {
+                                newboard[x, y] = board[x, y];
+                                newoldboard[x, y] = oldboard[x, y];
+                            }
+                        }
+                        else
+                        {
+                            for (int y = 0; y < newWidthY; y++)
+                            {
+                                newboard[x, y] = board[x, y];
+                                newoldboard[x, y] = oldboard[x, y];
+                            }
+                        }
+
+                    }
+                }
+
+                //board = new bool[newWidthX, newWidthY];
+                board = newboard;
+                //oldboard = new bool[newWidthX, newWidthY];
+                oldboard = newoldboard;
+
+                newboard = null;
+                newoldboard = null;
+
+                for (int n = 0; n < 7; n++)
+                    rgbboardhistory[n] = new bool[newWidthX, newWidthY];
+
+
+                oldWidthX = WidthX;
+                oldWidthY = WidthY;
+                WidthX = newWidthX;
+                WidthY = newWidthY;
 
                 drawBoard();
 
@@ -1047,10 +1283,148 @@ namespace GameOfLife
                     T1wasRunning = false;
                 }
 
+                this.WindowState = FormWindowState.Normal;
+                this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+                this.Bounds = Screen.PrimaryScreen.Bounds;
+            }
+            else // exit fullscreen
+            {
+                if (timer1.Enabled)
+                {
+                    timer1.Stop();
+                    timer2.Stop();
+                    T1wasRunning = true;
+                }
 
-                gridChanged = false;
+                
+
+                pictureBox1.Location = oldLocation;
+                pictureBox1.Width = oldWidthX * gridSize;
+                pictureBox1.Height = oldWidthY * gridSize;
+                
+                //bmp = null;
+                bmp = new Bitmap((oldWidthX * gridSize) + (2 * gridSize), (oldWidthY * gridSize) + (2 * gridSize), System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
+                using (var g = Graphics.FromImage(bmp))
+                {
+
+                    Rectangle rect = new Rectangle(0, 0, (oldWidthX * gridSize) + 2 * gridSize + (gridSize / 2), (oldWidthY * gridSize) + 2 * gridSize + (gridSize / 2));
+
+                    // Fill rectangle to screen.
+                    g.FillRectangle(backcolor, rect);
+
+                    this.pictureBox1.Image = bmp;
+                }
+
+                bool[,] newboard = new bool[oldWidthX, oldWidthY];
+                bool[,] newoldboard = new bool[oldWidthX, oldWidthY];
+
+                if (WidthX <= oldWidthX)
+                    for (int x = 0; x < WidthX; x++)
+                    {
+                        if (WidthY <= oldWidthY)
+                            for (int y = 0; y < WidthY; y++)
+                            {
+                                newboard[x, y] = board[x, y];
+                                newoldboard[x, y] = oldboard[x, y];
+                            }
+                        else
+                            for (int y = 0; y < oldWidthY; y++)
+                            {
+                                newboard[x, y] = board[x, y];
+                                newoldboard[x, y] = oldboard[x, y];
+                            }
+
+                    }
+                else
+                    for (int x = 0; x < oldWidthX; x++)
+                    {
+                        if (WidthY <= oldWidthY)
+                            for (int y = 0; y < WidthY; y++)
+                            {
+                                newboard[x, y] = board[x, y];
+                                newoldboard[x, y] = oldboard[x, y];
+                            }
+                        else
+                            for (int y = 0; y < oldWidthY; y++)
+                            {
+                                newboard[x, y] = board[x, y];
+                                newoldboard[x, y] = oldboard[x, y];
+                            }
+
+                    }
+
+                board = newboard;
+                oldboard = newoldboard;
+
+                newboard = null;
+                newoldboard = null;
+
+                for (int n = 0; n < 7; n++)
+                    rgbboardhistory[n] = new bool[oldWidthX, oldWidthY];
+
+
+                WidthX = oldWidthX;
+                WidthY = oldWidthY;
+
+                drawBoard();
+
+                if (T1wasRunning)
+                {
+                    timer1.Start();
+                    timer2.Start();
+                    T1wasRunning = false;
+                }
+
+                
+                this.WindowState = FormWindowState.Maximized;
+                this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
             }
         }
+
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            
+            if (e.Alt && e.KeyCode == Keys.Enter)
+            {
+                // ...
+                showFullScreen = !showFullScreen;
+
+                if (showFullScreen)
+                    GoFullscreen(true);
+                else
+                    GoFullscreen(false);
+            }
+            if (e.Alt && e.KeyCode == Keys.F)
+            {
+                if (showFullScreen)
+                {
+                    if (!(hideControls))
+                        pictureBox1.BringToFront();
+                    else
+                        pictureBox1.SendToBack();
+                    hideControls = !hideControls;
+                }
+
+                
+            }
+            if (e.Alt && e.KeyCode == Keys.R)
+            {
+                bool isTimer1Enabled = false;
+                if (timer1.Enabled)
+                    isTimer1Enabled = true;
+
+                if (isTimer1Enabled)
+                    timer1.Stop();
+                drawBoard();
+                if (isTimer1Enabled)
+                    timer1.Start();
+
+
+            }
+
+        }
+
     }
 
     public static class GraphicsExtensions
