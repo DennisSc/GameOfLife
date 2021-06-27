@@ -60,6 +60,7 @@ namespace GameOfLife
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.button7 = new System.Windows.Forms.Button();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.panel1 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -69,6 +70,7 @@ namespace GameOfLife
             this.groupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.groupBox6.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -147,7 +149,7 @@ namespace GameOfLife
             this.groupBox1.Controls.Add(this.button4);
             this.groupBox1.Controls.Add(this.button2);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(12, 222);
+            this.groupBox1.Location = new System.Drawing.Point(13, 203);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(125, 265);
             this.groupBox1.TabIndex = 7;
@@ -200,7 +202,7 @@ namespace GameOfLife
             this.groupBox2.Controls.Add(this.radioButton3);
             this.groupBox2.Controls.Add(this.radioButton2);
             this.groupBox2.Controls.Add(this.radioButton1);
-            this.groupBox2.Location = new System.Drawing.Point(12, 580);
+            this.groupBox2.Location = new System.Drawing.Point(13, 561);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(125, 125);
             this.groupBox2.TabIndex = 12;
@@ -270,7 +272,7 @@ namespace GameOfLife
             // 
             this.groupBox3.Controls.Add(this.radioButton12);
             this.groupBox3.Controls.Add(this.radioButton5);
-            this.groupBox3.Location = new System.Drawing.Point(12, 493);
+            this.groupBox3.Location = new System.Drawing.Point(13, 474);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(125, 81);
             this.groupBox3.TabIndex = 14;
@@ -319,7 +321,7 @@ namespace GameOfLife
             this.groupBox4.Controls.Add(this.button6);
             this.groupBox4.Controls.Add(this.button3);
             this.groupBox4.Controls.Add(this.button1);
-            this.groupBox4.Location = new System.Drawing.Point(12, 22);
+            this.groupBox4.Location = new System.Drawing.Point(13, 3);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(125, 194);
             this.groupBox4.TabIndex = 15;
@@ -369,7 +371,7 @@ namespace GameOfLife
             this.groupBox5.Controls.Add(this.label2);
             this.groupBox5.Controls.Add(this.trackBar1);
             this.groupBox5.Controls.Add(this.label3);
-            this.groupBox5.Location = new System.Drawing.Point(12, 711);
+            this.groupBox5.Location = new System.Drawing.Point(13, 692);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(125, 104);
             this.groupBox5.TabIndex = 19;
@@ -402,12 +404,25 @@ namespace GameOfLife
             this.groupBox6.Controls.Add(this.label5);
             this.groupBox6.Controls.Add(this.label6);
             this.groupBox6.Controls.Add(this.label9);
-            this.groupBox6.Location = new System.Drawing.Point(12, 821);
+            this.groupBox6.Location = new System.Drawing.Point(13, 802);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(125, 100);
             this.groupBox6.TabIndex = 20;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Performance";
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.groupBox4);
+            this.panel1.Controls.Add(this.groupBox6);
+            this.panel1.Controls.Add(this.groupBox1);
+            this.panel1.Controls.Add(this.groupBox5);
+            this.panel1.Controls.Add(this.groupBox2);
+            this.panel1.Controls.Add(this.groupBox3);
+            this.panel1.Location = new System.Drawing.Point(4, 19);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(154, 902);
+            this.panel1.TabIndex = 21;
             // 
             // Form1
             // 
@@ -415,13 +430,8 @@ namespace GameOfLife
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1095, 992);
-            this.Controls.Add(this.groupBox6);
-            this.Controls.Add(this.groupBox5);
-            this.Controls.Add(this.groupBox4);
-            this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.groupBox1);
             this.Cursor = System.Windows.Forms.Cursors.Default;
             this.DoubleBuffered = true;
             this.Name = "Form1";
@@ -442,6 +452,7 @@ namespace GameOfLife
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -479,6 +490,7 @@ namespace GameOfLife
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.Panel panel1;
     }
 }
 
