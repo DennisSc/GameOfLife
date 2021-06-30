@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "GameOfLife": {
+      "commandName": "Project"
+    }
+  }
+}

@@ -10,49 +10,55 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Automata;
 
 namespace GameOfLife
 {
     public partial class Form1 : Form
     {
 
-        
-        Bitmap crosshairCursorBitmap = (Bitmap)(new Bitmap(Properties.Resources.crosshair));
-        Cursor redCrosshairCursor;
-
-
-        const int healthCondition1 = 2; // two adjacent dots required to survive
-        const int healthCondition2 = 3; // three adjacent dots required to grow
-
         static int speed = 50; // time in ms between cycles
 
-        public static int WidthX = 345; // X dimension of cell grid
+        public static int WidthX = 335; // X dimension of cell grid
         public static int WidthY = 185; // Y dimension of cell grid
+        //const int WidthX = 325; // X dimension of cell grid
+        //const int WidthY = 165; // Y dimension of cell grid
 
         public static int oldWidthX = WidthX; // X dimension of cell grid
         public static int oldWidthY = WidthY; // Y dimension of cell grid
 
-        //const int WidthX = 325; // X dimension of cell grid
-        //const int WidthY = 165; // Y dimension of cell grid
+        Automata.GOLalgorithm algorithm = new Automata.GOLalgorithm();
+        Automata.Rule30 rule30 = new Automata.Rule30();
 
+        Bitmap crosshairCursorBitmap = (Bitmap)(new Bitmap(Properties.Resources.crosshair));
+        Cursor redCrosshairCursor;
+
+        /*       
+        const int healthCondition1 = 2; // two adjacent dots required to survive
+        const int healthCondition2 = 3; // three adjacent dots required to grow
+        */
+
+        
+
+        
         const int Xoffset = 160; //X offset from upper left corner of window
         const int Yoffset = 40;
 
         public static int gridSize = 5; // distance between grids
-
         public static int cellSize = 4; //radius of dots
 
         public static bool gridChanged = false;
         public static bool T1wasRunning = false;
 
+        //fullscreen stuff
         bool showFullScreen = false;
         Point oldLocation;
         bool hideControls = false;
 
+        //brush 0 selected
         uint drawMode = 0;
 
         Bitmap bmp = new Bitmap((WidthX * gridSize) + (gridSize), (WidthY * gridSize) + (gridSize), System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
-
         Bitmap thumbnail = new Bitmap(50, 50, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
         static string patternCustomFileName = "pictures\\GOL1.bmp";
@@ -70,13 +76,14 @@ namespace GameOfLife
 
         SolidBrush dotcolor = new SolidBrush(Color.LavenderBlush);
         SolidBrush backcolor = new SolidBrush(Color.DarkGoldenrod);
-        SolidBrush shadowcolor = new SolidBrush(Color.LightSalmon);
+        //SolidBrush shadowcolor = new SolidBrush(Color.LightSalmon);
 
 
         static bool[,] board = new bool[WidthX, WidthY];
         static bool[,] oldboard = new bool[WidthX, WidthY];
-        //static bool[,] oldoldboard = new bool[WidthX, WidthY];
         static bool[][,] rgbboardhistory = new bool[7][,]; //[ new bool[WidthX,WidthY]; // = new bool[,]>();
+        
+        
         static Color[] ShadowColors = new Color[] { Color.FromArgb(237,213,186),
                                                     Color.FromArgb(228,200,156),
                                                     Color.FromArgb(219,186,127),
@@ -102,8 +109,6 @@ namespace GameOfLife
 
 
 
-
-
         public struct IconInfo
         {
             public bool fIcon;
@@ -112,6 +117,8 @@ namespace GameOfLife
             public IntPtr hbmMask;
             public IntPtr hbmColor;
         }
+
+
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool GetIconInfo(IntPtr hIcon, ref IconInfo pIconInfo);
@@ -136,9 +143,7 @@ namespace GameOfLife
 
 
 
-
-
-
+        
 
         public Form1()
         {
@@ -152,8 +157,6 @@ namespace GameOfLife
             this.Icon = Properties.Resources.CGOL;
 
             crosshairCursorBitmap.MakeTransparent(Color.DarkGoldenrod);
-            //IntPtr ptr1 = crosshairCursorBitmap.GetHicon();
-            //redCrosshairCursor = new Cursor(ptr1);
             redCrosshairCursor = CreateCursorNoResize(crosshairCursorBitmap, 15, 15);
 
             using (var g = Graphics.FromImage(bmp))
@@ -189,9 +192,8 @@ namespace GameOfLife
                         rgbboardhistory[n][i, j] = false;
                     }
                 }
-            drawBoard();
 
-            //createRandomBoard();
+            drawBoard();
 
             timer1.Interval = speed;
             timer1.Tick += Timer1_Tick;
@@ -212,10 +214,7 @@ namespace GameOfLife
             pictureBox1.Height = ((WidthY * gridSize) + (gridSize / 2 + (gridSize % 2 > 0 ? 1 : 0)));
             pictureBox1.Refresh();
 
-            //this.Width =  WidthX * gridSize;
-            //this.Height = (WidthY * gridSize) - 30;
             
-            //this.ClientSize = new Size(WidthX * gridSize, WidthY * gridSize);
         }
 
         private void Timer1_Tick(object sender, EventArgs e)
@@ -232,13 +231,16 @@ namespace GameOfLife
             oldboard = board;
 
             frameStopwatch.Start();
-            //bool[,] oldboard = board;
-
-           
-            //bool[,] newboard = calculateNextBoard();
-            //board = newboard;
-            board = calculateNextBoard();
-
+            //board = calculateNextBoard();
+            //board = algorithm.calculateNextBoard(board);
+            if (drawMode == 2)
+                board = rule30.calculateNextBoardScanline(board);
+            else if (drawMode == 3)
+                board = rule30.calculateNextBoard(board);
+            else if (drawMode == 1)
+                board = algorithm.calculateNextBoard(board);
+            else
+                board = algorithm.calculateNextBoard(board);
             frameStopwatch.Stop();
             calcAvg += (double)frameStopwatch.Elapsed.TotalMilliseconds;
             frameStopwatch.Reset();
@@ -249,20 +251,16 @@ namespace GameOfLife
                 //drawBoard();
             else if (drawMode >= 1 )
                 drawChangedCellsShadowed(oldboard, board);
-            
             frameStopwatch.Stop();
             drawAvg += (double)frameStopwatch.Elapsed.TotalMilliseconds;
             frameStopwatch.Reset();
             
             frameCounter++;
 
-            //drawBoard();
-            
         }
 
         private void Timer2_Tick(object sender, EventArgs e)
         {
-
             double drawavg = drawAvg / frameCounter;
             double calcavg = calcAvg / frameCounter;
             label5.Text = calcavg.ToString("0.000") + " ms";
@@ -271,8 +269,6 @@ namespace GameOfLife
             frameCounter = 0;
             drawAvg = 0;
             calcAvg = 0;
-
-            //drawBoard();
 
         }
 
@@ -342,10 +338,9 @@ namespace GameOfLife
 
                         if (board[i, j] == true)
                             GraphicsExtensions.FillRectangle(g, dotcolor, i * gridSize + cellSize, j * gridSize + cellSize, cellSize);
-                        //GraphicsExtensions.FillCircle(myGraphics, mySolidBrush, Xoffset + i * gridSize, Yoffset + j * gridSize, circleSize);
                         else
                             GraphicsExtensions.FillRectangle(g, backcolor, i * gridSize + cellSize, j * gridSize + cellSize, cellSize);
-                        //GraphicsExtensions.FillCircle(myGraphics, myBlankBrush, Xoffset + i * gridSize, Yoffset + j * gridSize, circleSize);
+                        
                     }
                 this.pictureBox1.Image = bmp;
             }
@@ -356,14 +351,7 @@ namespace GameOfLife
 
         void drawChangedCells(bool[,] oldboard, bool[,] Tempboard)
         {
-            //Graphics myGraphics = base.CreateGraphics();
-            // Pen myPen = new Pen(Color.Red);
-            // Pen blankPen = new Pen(BackColor);
-            //SolidBrush mySolidBrush = dotcolor;
-            //SolidBrush myBlankBrush = backcolor;
-            //myGraphics.DrawEllipse(myPen, 50, 50, 150, 150);
-
-            //var bmp = new Bitmap(this.pictureBox1.Width, this.pictureBox1.Height, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
+            
             using (var g = Graphics.FromImage(bmp))
             {
                 delPreviewImage(g, oldMousePos.Item1, oldMousePos.Item2);
@@ -373,13 +361,10 @@ namespace GameOfLife
                 {
                     for (int j = 0; j < WidthY; j++)
                     {
-
                         if ((oldboard[i, j] == false) && (Tempboard[i, j] == true))
                             GraphicsExtensions.FillRectangle(g, dotcolor, i * gridSize + cellSize, j * gridSize + cellSize, cellSize);
-                        //GraphicsExtensions.FillCircle(myGraphics, mySolidBrush,);
                         else if ((oldboard[i, j] == true) && (Tempboard[i, j] == false))
                             GraphicsExtensions.FillRectangle(g, backcolor, i * gridSize + cellSize, j * gridSize + cellSize, cellSize);
-                        //GraphicsExtensions.FillCircle(myGraphics, myBlankBrush, Xoffset + i * gridSize, Yoffset + j * gridSize, circleSize);
                     }
                 }
 
@@ -394,20 +379,13 @@ namespace GameOfLife
                 this.pictureBox1.Image = bmp;
             }
             
-            //board = Tempboard;
+            
         }
 
 
         void drawChangedCellsShadowed(bool[,] oldboard, bool[,] Tempboard)
         {
-            //Graphics myGraphics = base.CreateGraphics();
-            // Pen myPen = new Pen(Color.Red);
-            // Pen blankPen = new Pen(BackColor);
-            //SolidBrush mySolidBrush = dotcolor;
-            //SolidBrush myBlankBrush = backcolor;
-            //myGraphics.DrawEllipse(myPen, 50, 50, 150, 150);
-
-            //var bmp = new Bitmap(this.pictureBox1.Width, this.pictureBox1.Height, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
+            
             using (var g = Graphics.FromImage(bmp))
             {
                 
@@ -517,12 +495,12 @@ namespace GameOfLife
 
             }
            
-            //board = Tempboard;
+            
         }
 
 
 
-
+        /*
         static bool[,] calculateNextBoard()
         {
             bool[,] Tempboard = new bool[WidthX, WidthY];
@@ -581,7 +559,7 @@ namespace GameOfLife
             
             return Tempboard;
         }
-
+        */
 
       
 
@@ -794,6 +772,8 @@ namespace GameOfLife
 
 
             if (
+                (((Xoffset / gridSize) + (image1.Width - 1)) >= 0) &&
+                (((Yoffset / gridSize) + (image1.Height - 1)) >= 0) &&
                 (((Xoffset / gridSize) + (image1.Width - 1)) < (WidthX)) &&
                 (((Yoffset / gridSize) + (image1.Height - 1)) < (WidthY))
                 )
@@ -916,16 +896,15 @@ namespace GameOfLife
 
 
 
-
+        /*
         public static int ToInt(bool value)
         {
             return value ? 1 : 0;
         }
+        */
 
         private void button2_Click(object sender, EventArgs e)
         {
-            //timer1.Stop();
-            //createBoard();
             loadImagefromBMP("pictures\\GOL1.bmp");
             if (!(timer1.Enabled))
                 drawBoard();
